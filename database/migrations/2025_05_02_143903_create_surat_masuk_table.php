@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('surat_keluars', function (Blueprint $table) {
+        Schema::create('surat_masuk', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_surat')->nullable(); // auto increment logic via observer/boot
+            $table->string('kode_surat')->unique();
             $table->string('nomor_surat')->nullable();
             $table->string('judul');
             $table->string('perihal')->nullable();
-            $table->foreignId('kategori_id')->nullable()->constrained('kategori_dokumens')->nullOnDelete();
-            $table->foreignId('sumber_id')->nullable()->constrained('sumber_dokumens')->nullOnDelete();
             $table->date('tanggal_surat');
-            $table->date('tanggal_keluar');
-            $table->string('ditujukan')->nullable();
+            $table->date('tanggal_masuk');
+            $table->foreignId('kategori_id')->nullable()->constrained('kategori_dokumens')->onDelete('set null');
+            $table->foreignId('sumber_id')->nullable()->constrained('sumber_dokumens')->onDelete('set null');
+            $table->text('deskripsi')->nullable();
             $table->string('file_path')->nullable();
             $table->string('file_original')->nullable();
-            $table->text('deskripsi')->nullable();
+            $table->foreignId('ditujukan_id')->nullable()->constrained('workers')->nullOnDelete();
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('surat_keluars');
+        Schema::dropIfExists('surat_masuk');
     }
 };

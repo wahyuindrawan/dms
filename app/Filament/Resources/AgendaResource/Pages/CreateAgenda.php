@@ -6,6 +6,7 @@ use App\Filament\Resources\AgendaResource;
 use App\Models\Worker;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\Facades\Log;
 
 class CreateAgenda extends CreateRecord
 {
@@ -24,18 +25,18 @@ class CreateAgenda extends CreateRecord
 
     protected function afterCreate(): void
     {
-        $workerIds = $this->data['workers'] ?? [];
-        Log::info('workerIds sebelum filter', $workerIds);
+        $workerId = $this->data['workers'] ?? [];
+        Log::info('workerIds sebelum filter', $workerId);
 
-        if (in_array('ALL', $workerIds)) {
-            $workerIds = Worker::pluck('id')->toArray();
+        if (in_array('ALL', $workerId)) {
+            $workerId = Worker::pluck('id')->toArray();
         } else {
-            $workerIds = array_filter($workerIds, fn($id) => $id !== 'ALL');
-            $workerIds = array_map('intval', $workerIds);
+            $workerId = array_filter($workerId, fn($id) => $id !== 'ALL');
+            $workerId = array_map('intval', $workerId);
         }
 
-        Log::info('workerIds setelah filter', $workerIds);
+        Log::info('workerId setelah filter', $workerId);
 
-        $this->record->workers()->sync($workerIds);
+        $this->record->workers()->sync($workerId);
     }
 }

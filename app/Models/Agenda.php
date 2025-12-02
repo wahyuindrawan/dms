@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Agenda extends Model
 {
+    protected $table = 'agenda';
     protected $fillable = [
         'judul',
         'deskripsi',

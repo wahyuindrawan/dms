@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SuratMasuk extends Model
 {
     use SoftDeletes; 
-    
+    protected $table = 'surat_masuk';
     protected static function booted()
     {
         static::creating(function ($surat) {

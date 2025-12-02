@@ -11,13 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dokumen_lains', function (Blueprint $table) {
+        Schema::create('surat_keluar', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_dokumen')->unique();
+            $table->string('kode_surat')->nullable(); // auto increment logic via observer/boot
+            $table->string('nomor_surat')->nullable();
             $table->string('judul');
+            $table->string('perihal')->nullable();
             $table->foreignId('kategori_id')->nullable()->constrained('kategori_dokumens')->nullOnDelete();
             $table->foreignId('sumber_id')->nullable()->constrained('sumber_dokumens')->nullOnDelete();
-            $table->date('tanggal_dokumen');
+            $table->date('tanggal_surat');
+            $table->date('tanggal_keluar');
+            $table->string('ditujukan')->nullable();
             $table->string('file_path')->nullable();
             $table->string('file_original')->nullable();
             $table->text('deskripsi')->nullable();
@@ -30,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dokumen_lains');
+        Schema::dropIfExists('surat_keluars');
     }
 };

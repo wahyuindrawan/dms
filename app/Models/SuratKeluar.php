@@ -9,6 +9,7 @@ class SuratKeluar extends Model
 {
     use SoftDeletes;
     
+    protected $table = 'surat_keluar';
     protected static function booted()
     {
         static::creating(function ($surat) {

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SumberDokumen extends Model
 {
-    protected $table = 'sumber_dokumens';
+    protected $table = 'sumber_dokumen';
 
     protected $fillable = [
         'nama',
