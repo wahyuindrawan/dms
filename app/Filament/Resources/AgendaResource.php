@@ -26,6 +26,7 @@ class AgendaResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-calendar';
     protected static ?string $navigationGroup = 'Tracking & Agenda';
     protected static ?string $navigationLabel = 'Agenda';
+    protected static ?int $navigationSort = 4;
     protected static ?string $slug = 'agenda';
 
     public static function form(Form $form): Form

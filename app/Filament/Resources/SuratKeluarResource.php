@@ -23,9 +23,11 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class SuratKeluarResource extends Resource
 {
     protected static ?string $model = SuratKeluar::class;
-    protected static ?string $navigationIcon = 'heroicon-o-paper-airplane';
+    protected static ?string $pluralModelLabel = 'Surat Keluar';
     protected static ?string $navigationGroup = 'Manajemen Surat';
+    protected static ?string $navigationIcon = 'heroicon-o-paper-airplane';
     protected static ?string $navigationLabel = 'Surat Keluar';
+    protected static ?int $navigationSort = 2;
     protected static ?string $slug = 'surat-keluar';
 
     public static function form(Form $form): Form

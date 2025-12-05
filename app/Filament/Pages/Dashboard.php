@@ -13,14 +13,17 @@ use App\Models\Disposisi;
 use Filament\Widgets\StatsOverviewWidget\Card;
 use Filament\Pages\Dashboard as BaseDashboard;
 use Filament\Widgets\StatsOverviewWidget;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\View;
 
 class Dashboard extends BaseDashboard
 {
     protected static string $routePath = '/';
     protected static ?string $navigationIcon = 'heroicon-o-home';
-    protected static ?string $title = 'Dashboard';
-    protected static ?string $navigationLabel = 'Dashboard';
+    // protected static ?string $title = 'Dashboard';
+    // protected static ?string $navigationLabel = 'Dashboard';
+    
+    // protected static string $view = 'filament.pages.dashboard';
 
     protected function getHeaderWidgets(): array
     {

@@ -24,6 +24,7 @@ class DisposisiResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
     protected static ?string $navigationGroup = 'Tracking & Agenda';
     protected static ?string $navigationLabel = 'Disposisi';
+    protected static ?int $navigationSort = 5;
     protected static ?string $slug = 'disposisi';
 
     public static function mutateFormDataBeforeCreate(array $data): array

@@ -1,0 +1,10 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+/* Membuat Navigation Group Title menjadi Bold */
+.fi-sidebar-group-label {
+    font-weight: 700 !important;  /* bold */
+    font-size: medium !important;
+    color: #111827 !important;    /* text-gray-900 */
+}   

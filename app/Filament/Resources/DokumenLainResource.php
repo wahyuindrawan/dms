@@ -22,9 +22,11 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class DokumenLainResource extends Resource
 {
     protected static ?string $model = DokumenLain::class;
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $pluralModelLabel = 'Dokumen Lain';
     protected static ?string $navigationGroup = 'Manajemen Surat';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationLabel = 'Dokumen Lain';
+    protected static ?int $navigationSort = 3;
     protected static ?string $slug = 'dokumen-lain';
 
     public static function form(Form $form): Form

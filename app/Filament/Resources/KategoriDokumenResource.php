@@ -22,6 +22,7 @@ class KategoriDokumenResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'Data Dasar';
     protected static ?string $navigationLabel = 'Kategori Dokumen';
+    protected static ?int $navigationSort = 6;
     protected static ?string $slug = 'kategori-dokumen';
 
     public static function form(Form $form): Form

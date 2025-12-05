@@ -23,6 +23,7 @@ class SumberDokumenResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-folder';
     protected static ?string $navigationGroup = 'Data Dasar';
     protected static ?string $navigationLabel = 'Asal Dokumen';
+    protected static ?int $navigationSort = 7;
     protected static ?string $slug = 'asal-dokumen';
 
     public static function form(Form $form): Form

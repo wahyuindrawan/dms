@@ -22,6 +22,7 @@ class WorkerResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationGroup = 'Data Dasar';
     protected static ?string $navigationLabel = "Karyawan";
+    protected static ?int $navigationSort = 8;
     protected static ?string $slug = "worker";
 
     public static function form(Form $form): Form
