@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Worker;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasRoles, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +25,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'worker_id',
     ];
 
     /**
@@ -51,5 +55,10 @@ class User extends Authenticatable
     public function worker(): BelongsTo
     {
         return $this->belongsTo(Worker::class);
+    }
+
+    public function roleData(): BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'role', 'nama');
     }
 }

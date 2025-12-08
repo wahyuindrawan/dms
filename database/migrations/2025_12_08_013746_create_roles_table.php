@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('surat_masuk', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama')->unique();
+            $table->string('display_name');
+            $table->string('deskripsi')->nullable();
+            $table->string('color')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('surat_masuk', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
+        Schema::dropIfExists('roles');
     }
 };

@@ -4,7 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SuratMasukResource\Pages;
 use App\Models\SuratMasuk;
+use App\Helpers\AccessHelper;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -23,91 +27,62 @@ class SuratMasukResource extends Resource
     protected static ?string $navigationGroup = 'Manajemen Surat';
     protected static ?string $navigationIcon = 'heroicon-o-inbox-arrow-down';
     protected static ?string $navigationLabel = 'Surat Masuk';
-    protected static ?int $navigationSort = 1;
     protected static ?string $slug = 'surat-masuk';
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                TextInput::make('judul')->required()->label('Judul Surat'),
-                TextInput::make('nomor_surat')->label('Nomor Surat')->nullable(),
-                TextInput::make('perihal')->label('Perihal')->nullable(),
-                DatePicker::make('tanggal_surat')->required()->label('Tanggal Surat'),
-                DatePicker::make('tanggal_masuk')->required()->label('Tanggal Masuk'),
-                Select::make('kategori_id')
-                    ->relationship('kategori', 'nama')
-                    ->label('Kategori')
-                    ->required(),
-                Select::make('sumber_id')
-                    ->relationship('sumber', 'nama')
-                    ->label('Sumber')
-                    ->required(),
-                Select::make('ditujukan_id')
-                    ->relationship('ditujukan', 'nama') // pastikan model Worker ada kolom 'nama'
-                    ->label('Ditujukan ke')
-                    ->searchable()
-                    ->nullable(),
-                Textarea::make('deskripsi')->label('Keterangan'),
-                FileUpload::make('file_path')
-                    ->label('Upload File')
-                    ->directory('surat-masuk')
-                    ->acceptedFileTypes(['application/pdf', 'application/msword', 'image/*'])
-                    ->maxSize(2048)
-                    ->preserveFilenames() // ⬅️ ini yang menyimpan nama asli
-                    ->storeFileNamesIn('file_original'), // menyimpan nama asli file
-            ]);
+        return $form->schema([
+            TextInput::make('judul')->required()->label('Judul Surat'),
+            TextInput::make('nomor_surat')->label('Nomor Surat')->nullable(),
+            TextInput::make('perihal')->label('Perihal')->nullable(),
+
+            DatePicker::make('tanggal_surat')->required()->label('Tanggal Surat'),
+            DatePicker::make('tanggal_masuk')->required()->label('Tanggal Masuk'),
+
+            Select::make('kategori_id')
+                ->relationship('kategori', 'nama')
+                ->label('Kategori')->required(),
+
+            Select::make('sumber_id')
+                ->relationship('sumber', 'nama')
+                ->label('Asal Dokumen')->required(),
+
+            Select::make('ditujukan_id')
+                ->relationship('ditujukan', 'nama')
+                ->label('Ditujukan')
+                ->searchable(),
+
+            Textarea::make('deskripsi')->label('Keterangan'),
+
+            FileUpload::make('file_path')
+                ->label('Upload File')
+                ->directory('surat-masuk')
+                ->acceptedFileTypes(['application/pdf', 'application/msword', 'image/*'])
+                ->maxSize(2048)
+                ->preserveFilenames()
+                ->storeFileNamesIn('file_original'),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            // ->columns([
-            //     TextColumn::make('judul')->searchable(),
-            //     TextColumn::make('nomor_surat')->label('No. Surat'),
-            //     TextColumn::make('perihal'),
-            //     TextColumn::make('ditujukan.nama')->label('Ditujukan'),
-            //     TextColumn::make('tanggal_surat')->date(),
-            //     TextColumn::make('tanggal_masuk')->date(),
-            //     TextColumn::make('kategori.nama')->label('Kategori'),
-            //     TextColumn::make('sumber.nama')->label('Sumber'),
-            // ])->defaultSort('tanggal_masuk', 'desc')
-            // ->filters([
-            //     //
-            // ])
             ->columns([
                 TextColumn::make('judul')
                     ->label('Judul & Nomor Surat')
-                    ->formatStateUsing(function ($state, $record) {
-                        return "<div class='leading-tight'>
-                        <div class='font-semibold text-gray-800'>{$record->judul}</div>
-                        <div class='text-sm text-gray-500'>{$record->nomor_surat}</div>
-                    </div>";
-                    })
                     ->html()
-                    ->sortable()
-                    ->searchable(),
-
-                // TextColumn::make('tanggal_surat')
-                //     ->label('Tanggal Surat')
-                //     ->date()
-                //     ->sortable(),
-
-                TextColumn::make('sumber.nama')
-                    ->label('Asal Dokumen')
-                    ->sortable()
-                    ->searchable(),
-
-                TextColumn::make('kategori.nama')
-                    ->label('Kategori')
-                    ->sortable()
-                    ->searchable(),
-
-                TextColumn::make('tanggal_masuk')
-                    ->label('Tanggal Masuk')
-                    ->date()
+                    ->formatStateUsing(fn ($state, $record) =>
+                        "<div class='leading-tight'>
+                            <div class='font-semibold text-gray-800'>{$record->judul}</div>
+                            <div class='text-sm text-gray-500'>{$record->nomor_surat}</div>
+                        </div>"
+                    )
+                    ->searchable()
                     ->sortable(),
 
+                TextColumn::make('sumber.nama')->label('Asal Dokumen')->searchable()->sortable(),
+                TextColumn::make('kategori.nama')->label('Kategori')->searchable()->sortable(),
+                TextColumn::make('tanggal_masuk')->label('Tanggal Masuk')->date()->sortable(),
             ])
             ->defaultSort('created_at', 'desc')
             ->actions([
@@ -117,22 +92,23 @@ class SuratMasukResource extends Resource
                     ->icon('heroicon-o-eye')
                     ->modalContent(fn($record) => view('filament.modals.detail-surat-masuk', ['record' => $record]))
                     ->modalWidth('3xl'),
-                Tables\Actions\DeleteAction::make()
+
+                // ViewAction::make(),
+
+                EditAction::make()
+                    ->visible(fn () => AccessHelper::canEditSuratMasuk()),
+
+                DeleteAction::make()
+                    ->visible(fn () => AccessHelper::canDeleteSuratMasuk())
                     ->label('')
                     ->tooltip('Hapus'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->visible(fn () => AccessHelper::canDeleteSuratMasuk()),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array
@@ -144,8 +120,29 @@ class SuratMasukResource extends Resource
         ];
     }
 
-    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    // ==========================
+    //  OTORISASI PAKAI HELPER
+    // ==========================
+    public static function canViewAny(): bool
     {
-        return parent::getEloquentQuery()->withoutGlobalScopes()->withoutTrashed();
+        return AccessHelper::canViewSuratMasuk();
     }
+
+    public static function canCreate(): bool
+    {
+        return AccessHelper::canCreateSuratMasuk();
+    }
+
+    public static function canEdit($record): bool
+    {
+        return AccessHelper::canEditSuratMasuk();
+    }
+
+    public static function canDelete($record): bool
+    {
+        return AccessHelper::canDeleteSuratMasuk();
+    }
+
+    public static function canForceDelete($record): bool { return false; }
+    public static function canRestore($record): bool { return false; }
 }

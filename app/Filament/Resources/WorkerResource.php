@@ -6,6 +6,7 @@ use App\Filament\Resources\WorkerResource\Pages;
 use App\Filament\Resources\WorkerResource\RelationManagers;
 use App\Models\Worker;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;

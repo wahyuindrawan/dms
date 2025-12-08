@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
+use App\Models\Role;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -32,9 +33,11 @@ class UserResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
+                    ->label('Nama Lengkap')
                     ->required(),
 
                 TextInput::make('email')
+                    ->label('Alamat Email')
                     ->email()
                     ->required()
                     ->unique(ignoreRecord: true),
@@ -53,12 +56,11 @@ class UserResource extends Resource
                     ->nullable(),
 
                 Select::make('role')
-                    ->options([
-                        'admin' => 'Administrator',
-                        'tu' => 'Petugas TU',
-                        'user' => 'User Biasa',
-                    ])
-                    ->label('Peran')
+                    ->label('Peran Pengguna')
+                    ->options(function () {
+                        return Role::all()->pluck('display_name', 'nama')->toArray();
+                    })
+                    ->searchable()
                     ->required(),
             ]);
     }
@@ -68,16 +70,14 @@ class UserResource extends Resource
         return $table
             ->columns([
                 // TextColumn::make('id')->sortable(),
-                TextColumn::make('name')->searchable(),
+                TextColumn::make('name')->searchable()->label('Username'),
                 TextColumn::make('email')->copyable(),
                 TextColumn::make('worker.nama')->label('Pegawai'),
-                TextColumn::make('role')->badge()->color(
-                    fn(string $state): string => match ($state) {
-                        'admin' => 'success',
-                        'tu' => 'info',
-                        'user' => 'gray',
-                    }
-                ),
+                TextColumn::make('role')
+                ->label('Role')
+                ->badge()
+                ->formatStateUsing(fn ($state, $record) => $record->roleData?->display_name ?? '-')
+                ->color(fn ($state, $record) => $record->roleData?->color ?? 'gray')
             ])
             ->filters([
                 //
@@ -107,4 +107,18 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
+
+    // protected function mutateFormDataBeforeCreate(array $data): array
+    // {
+    //     $role = $data['role'];
+
+    //     unset($data['role']);
+
+    //     return $data;
+    // }
+
+    // protected function afterCreate(): void
+    // {
+    //     $this->record->assignRole($this->data['role'] ?? null);
+    // }
 }
