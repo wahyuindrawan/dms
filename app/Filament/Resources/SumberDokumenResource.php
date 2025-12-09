@@ -5,6 +5,11 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SumberDokumenResource\Pages;
 use App\Filament\Resources\SumberDokumenResource\RelationManagers;
 use App\Models\SumberDokumen;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -52,13 +57,23 @@ class SumberDokumenResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                ViewAction::make('view')
+                    ->label('')
+                    ->tooltip('Lihat detail')
+                    ->icon('heroicon-o-eye'),
+                EditAction::make()
+                    ->label('')
+                    ->tooltip('Lihat detail')
+                    ->icon('heroicon-o-pencil'),
+                DeleteAction::make()
+                    ->requiresConfirmation()
+                    ->label('')
+                    ->tooltip('Hapus')
+                    // ->visible(fn ($record) => !$record->trashed()), // hanya tampil jika belum dihapus,,
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }

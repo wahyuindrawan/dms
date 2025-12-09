@@ -4,20 +4,20 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SuratMasukResource\Pages;
 use App\Models\SuratMasuk;
-use App\Helpers\AccessHelper;
-use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class SuratMasukResource extends Resource
@@ -69,20 +69,27 @@ class SuratMasukResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('judul')
-                    ->label('Judul & Nomor Surat')
+                    ->label('Nama Dokumen')
                     ->html()
-                    ->formatStateUsing(fn ($state, $record) =>
-                        "<div class='leading-tight'>
-                            <div class='font-semibold text-gray-800'>{$record->judul}</div>
-                            <div class='text-sm text-gray-500'>{$record->nomor_surat}</div>
-                        </div>"
-                    )
+                    ->formatStateUsing(fn($state, $record) => "
+                            <div class='leading-tight'>
+                                <div class='font-semibold text-gray-900'>{$record->judul}</div>
+                                <div class='text-xs text-gray-750'>No: {$record->nomor_surat}</div>
+                                <div class='text-xs text-gray-600 flex items-center gap-1'>
+                                    <img src='" . asset('icons/surat_in.png') . "' class='w-4 h-4 opacity-60 inline-block' /> Masuk :
+                                    " . \Carbon\Carbon::parse($record->tanggal_masuk)->format('d M Y') . "
+                                </div>
+                            </div>
+                        ")
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('sumber.nama')->label('Asal Dokumen')->searchable()->sortable(),
-                TextColumn::make('kategori.nama')->label('Kategori')->searchable()->sortable(),
-                TextColumn::make('tanggal_masuk')->label('Tanggal Masuk')->date()->sortable(),
+                TextColumn::make('kategori.nama')
+                    ->label('Kategori')
+                    ->badge()
+                    ->color(fn($state) => 'info')
+                    ->sortable(),
+                TextColumn::make('sumber.nama')->label('Asal Dokumen')->searchable()->sortable()->toggleable(),
             ])
             ->defaultSort('created_at', 'desc')
             ->actions([
@@ -90,23 +97,29 @@ class SuratMasukResource extends Resource
                     ->label('')
                     ->tooltip('Lihat detail')
                     ->icon('heroicon-o-eye')
-                    ->modalContent(fn($record) => view('filament.modals.detail-surat-masuk', ['record' => $record]))
+                    ->modalContent(
+                        fn($record) =>
+                        view('filament.modals.detail-surat-masuk', ['record' => $record])
+                    )
                     ->modalWidth('3xl'),
 
-                // ViewAction::make(),
-
-                EditAction::make()
-                    ->visible(fn () => AccessHelper::canEditSuratMasuk()),
+                // EditAction::make()
+                //     ->label('')
+                //     ->tooltip('Edit')
+                //     ->icon('heroicon-o-pencil'),
 
                 DeleteAction::make()
-                    ->visible(fn () => AccessHelper::canDeleteSuratMasuk())
+                    ->requiresConfirmation()
                     ->label('')
                     ->tooltip('Hapus'),
             ])
+
+            // POSISI ACTIONS DI KOLOM PERTAMA
+            ->actionsPosition(ActionsPosition::BeforeColumns)
+
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()
-                        ->visible(fn () => AccessHelper::canDeleteSuratMasuk()),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -119,30 +132,4 @@ class SuratMasukResource extends Resource
             'edit' => Pages\EditSuratMasuk::route('/{record}/edit'),
         ];
     }
-
-    // ==========================
-    //  OTORISASI PAKAI HELPER
-    // ==========================
-    public static function canViewAny(): bool
-    {
-        return AccessHelper::canViewSuratMasuk();
-    }
-
-    public static function canCreate(): bool
-    {
-        return AccessHelper::canCreateSuratMasuk();
-    }
-
-    public static function canEdit($record): bool
-    {
-        return AccessHelper::canEditSuratMasuk();
-    }
-
-    public static function canDelete($record): bool
-    {
-        return AccessHelper::canDeleteSuratMasuk();
-    }
-
-    public static function canForceDelete($record): bool { return false; }
-    public static function canRestore($record): bool { return false; }
 }
