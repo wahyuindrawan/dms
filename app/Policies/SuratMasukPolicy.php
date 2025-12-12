@@ -53,7 +53,7 @@ class SuratMasukPolicy
      */
     public function restore(User $user, SuratMasuk $suratMasuk): bool
     {
-        return in_array($user->role, ['admin']);
+        return $user->role === 'admin';
     }
 
     /**
@@ -61,6 +61,6 @@ class SuratMasukPolicy
      */
     public function forceDelete(User $user, SuratMasuk $suratMasuk): bool
     {
-        return in_array($user->role, ['admin']);
+        return $user->role === 'admin';
     }
 }

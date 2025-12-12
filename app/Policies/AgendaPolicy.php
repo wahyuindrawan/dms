@@ -53,7 +53,7 @@ class AgendaPolicy
      */
     public function restore(User $user, Agenda $agenda): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -61,6 +61,6 @@ class AgendaPolicy
      */
     public function forceDelete(User $user, Agenda $agenda): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 }

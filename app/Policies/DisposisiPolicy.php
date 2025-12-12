@@ -53,7 +53,7 @@ class DisposisiPolicy
      */
     public function restore(User $user, Disposisi $disposisi): bool
     {
-        return in_array($user->role, ['admin']);
+        return $user->role === 'admin';
     }
 
     /**
@@ -61,6 +61,6 @@ class DisposisiPolicy
      */
     public function forceDelete(User $user, Disposisi $disposisi): bool
     {
-        return in_array($user->role, ['admin']);
+        return $user->role === 'admin';
     }
 }

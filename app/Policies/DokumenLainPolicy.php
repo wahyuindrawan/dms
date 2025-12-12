@@ -53,7 +53,7 @@ class DokumenLainPolicy
      */
     public function restore(User $user, DokumenLain $dokumenLain): bool
     {
-        return in_array($user->role, ['admin']);
+        return $user->role === 'admin';
     }
 
     /**
@@ -61,6 +61,6 @@ class DokumenLainPolicy
      */
     public function forceDelete(User $user, DokumenLain $dokumenLain): bool
     {
-        return in_array($user->role, ['admin']);
+        return $user->role === 'admin';
     }
 }

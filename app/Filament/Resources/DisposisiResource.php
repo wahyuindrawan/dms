@@ -106,9 +106,9 @@ class DisposisiResource extends Resource
                     ->tooltip('Lihat Detail')
                     ->icon('heroicon-o-eye')
                     ->modalContent(
-                        fn($record) => view('filament.modals.detail-disposisi', ['record' => $record]) 
+                        fn($record) => view('filament.modals.detail-disposisi', ['record' => $record])
                     )
-                    ->modalWidth('3x1'),
+                    ->modalWidth('3xl'),
                 DeleteAction::make()
                     ->requiresConfirmation()
                     ->label('')

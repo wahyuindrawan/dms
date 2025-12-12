@@ -3,10 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AgendaResource\Pages;
-use App\Filament\Resources\AgendaResource\RelationManagers;
 use App\Models\Agenda;
 use App\Models\Worker;
-use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -17,8 +15,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AgendaResource extends Resource
 {
@@ -64,9 +60,26 @@ class AgendaResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('judul')->sortable(),
-                TextColumn::make('waktu')->label('Tanggal & Waktu')->dateTime(),
-                TextColumn::make('tempat'),
+                TextColumn::make('judul')
+                    ->label('Agenda')
+                    ->html()
+                    ->formatStateUsing(function ($state, $record) {
+                        $title = $record->judul;
+                        $date = $record->waktu ? \Carbon\Carbon::parse($record->waktu)->format('d M Y H:i') : '-';
+
+                        return "<div class='leading-tight'>\n"
+                            . "<div class='font-semibold text-gray-900 py-1'>{$title}</div>\n"
+                            . "<div class='text-xs text-gray-600'>Waktu: {$date}</div>\n"
+                            . "</div>";
+                    })
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('tempat')
+                    ->label('Tempat')
+                    ->sortable()
+                    ->toggleable(),
+
                 TextColumn::make('workers.nama')
                     ->label('Peserta')
                     ->formatStateUsing(function ($state, $record) {
@@ -74,15 +87,28 @@ class AgendaResource extends Resource
                         return count($record->workers) === $totalWorker
                             ? 'Semua Karyawan'
                             : implode(', ', $record->workers->pluck('nama')->take(3)->toArray()) . (count($record->workers) > 3 ? '...' : '');
-                    }),
+                    })
+                    ->toggleable(),
             ])
+            ->defaultSort('waktu', 'desc')
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('Lihat Detail')
+                    ->label('')
+                    ->tooltip('Lihat Detail')
+                    ->icon('heroicon-o-eye')
+                    ->modalContent(
+                        fn($record) => view('filament.modals.detail-agenda', ['record' => $record])
+                    )
+                    ->modalWidth('3xl'),
+                Tables\Actions\DeleteAction::make()
+                    ->requiresConfirmation()
+                    ->label('')
+                    ->tooltip('Hapus'),
             ])
+            ->actionsPosition(Tables\Enums\ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
