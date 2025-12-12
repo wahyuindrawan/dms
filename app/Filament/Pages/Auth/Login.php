@@ -38,4 +38,12 @@ class Login extends BaseLogin
             ->required()
             ->placeholder('Masukkan password Anda');
     }
+
+
+    protected static string $view = 'filament.pages.auth.login';
+
+    public function getLayout(): string
+    {
+        return 'filament.pages.auth.custom-layout';
+    }
 }
