@@ -37,7 +37,7 @@ class SuratMasukResource extends Resource
             TextInput::make('perihal')->label('Perihal')->nullable(),
 
             DatePicker::make('tanggal_surat')->required()->label('Tanggal Surat'),
-            DatePicker::make('tanggal_masuk')->required()->label('Tanggal Masuk'),
+            DatePicker::make('tanggal_masuk')->required()->default(now())->label('Tanggal Masuk'),
 
             Select::make('kategori_id')
                 ->relationship('kategori', 'nama')
@@ -73,9 +73,9 @@ class SuratMasukResource extends Resource
                     ->html()
                     ->formatStateUsing(fn($state, $record) => "
                             <div class='leading-tight'>
-                                <div class='font-semibold text-gray-900'>{$record->judul}</div>
+                                <div class='font-semibold text-gray-900 py-1'>{$record->judul}</div>
                                 <div class='text-xs text-gray-750'>No: {$record->nomor_surat}</div>
-                                <div class='text-xs text-gray-600 flex items-center gap-1'>
+                                <div class='text-xs text-gray-600 flex items-center gap-2'>
                                     <img src='" . asset('icons/surat_in.png') . "' class='w-4 h-4 opacity-60 inline-block' /> Masuk :
                                     " . \Carbon\Carbon::parse($record->tanggal_masuk)->format('d M Y') . "
                                 </div>
@@ -102,11 +102,6 @@ class SuratMasukResource extends Resource
                         view('filament.modals.detail-surat-masuk', ['record' => $record])
                     )
                     ->modalWidth('3xl'),
-
-                // EditAction::make()
-                //     ->label('')
-                //     ->tooltip('Edit')
-                //     ->icon('heroicon-o-pencil'),
 
                 DeleteAction::make()
                     ->requiresConfirmation()

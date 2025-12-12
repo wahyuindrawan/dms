@@ -15,7 +15,10 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -48,15 +51,12 @@ class SuratKeluarResource extends Resource
                     ->required(),
                 DatePicker::make('tanggal_keluar')
                     ->label('Tanggal Keluar')
+                    ->default(now())
                     ->required(),
                 Select::make('kategori_id')
                     ->relationship('kategori', 'nama')
                     ->label('Kategori')
                     ->required(),
-                // Select::make('sumber_id')
-                //     ->relationship('sumber', 'nama')
-                //     ->label('Sumber')
-                //     ->required(),
                 TextInput::make('ditujukan')
                     ->label('Ditujukan ke')
                     ->nullable(),
@@ -77,28 +77,27 @@ class SuratKeluarResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('judul')
-                    ->formatStateUsing(function ($state, $record) {
-                        return "<div class='leading-tight'>
-                        <div class='font-semibold text-gray-800'>{$record->judul}</div>
-                        <div class='text-sm text-gray-500'>{$record->nomor_surat}</div>
-                    </div>";
-                    })
+                    ->label('Nama Dokumen')
                     ->html()
+                    ->formatStateUsing(fn($state, $record) => "
+                            <div class='leading-tight'>
+                                <div class='font-semibold text-gray-900 py-1'>{$record->judul}</div>
+                                <div class='text-xs text-gray-750'>No: {$record->nomor_surat}</div>
+                                <div class='text-xs text-gray-600 flex items-center gap-2'>
+                                    <img src='" . asset('icons/surat_out.png') . "' class='w-4 h-4 opacity-60 inline-block' /> 
+                                    " . \Carbon\Carbon::parse($record->tanggal_keluar)->format('d M Y') . "
+                                </div>
+                            </div>
+                        ")
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('tanggal_surat')
-                    ->label('Tanggal Surat')
-                    ->sortable()
-                    ->date(),
                 TextColumn::make('kategori.nama')
                     ->label('Kategori')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('ditujukan')->label('Ditujukan'),
             ])->defaultSort('tanggal_keluar', 'desc')
-            ->filters([
-
-            ])
+            ->filters([])
             ->actions([
                 Action::make('Lihat Detail')
                     ->label('')
@@ -107,14 +106,16 @@ class SuratKeluarResource extends Resource
                     ->modalContent(fn($record) => view('filament.modals.detail-surat-keluar', ['record' => $record]))
                     ->modalWidth('3xl'),
                 Tables\Actions\DeleteAction::make()
-                ->requiresConfirmation()
-                ->label('')
-                ->tooltip('Hapus')
-                ->visible(fn ($record) => !$record->trashed()), // hanya tampil jika belum dihapus,
+                    ->requiresConfirmation()
+                    ->label('')
+                    ->tooltip('Hapus')
+                    ->visible(fn($record) => !$record->trashed()), // hanya tampil jika belum dihapus,
             ])
+            ->actionsPosition(ActionsPosition::BeforeColumns)
             ->bulkActions([
-                // Tables\Actions\DeleteBulkAction::make()
-                //     ->visible(fn ($record) => !$record->contains(fn ($record) => $record->trashed())),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
             ]);
     }
 
@@ -138,5 +139,4 @@ class SuratKeluarResource extends Resource
     {
         return parent::getEloquentQuery()->withoutTrashed();
     }
-
 }

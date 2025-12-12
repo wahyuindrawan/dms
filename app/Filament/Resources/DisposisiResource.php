@@ -3,20 +3,19 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\DisposisiResource\Pages;
-use App\Filament\Resources\DisposisiResource\RelationManagers;
 use App\Models\Disposisi;
-use Filament\Forms;
-use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DisposisiResource extends Resource
 {
@@ -38,8 +37,6 @@ class DisposisiResource extends Resource
     {
         return $form
             ->schema([
-                // Hidden::make('dari_worker_id')
-                //     ->default(fn () => Auth::user()?->workers?->id),
 
                 Select::make('surat_masuk_id')
                     ->relationship('suratMasuk', 'judul')
@@ -73,7 +70,17 @@ class DisposisiResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('suratMasuk.judul')
-                    ->label('Judul Surat'),
+                    ->label('Nama Dokumen')
+                    ->html()
+                    ->formatStateUsing(function ($state, $record) {
+                        $title = $record->suratMasuk?->judul ?? '-';
+                        $date = $record->created_at?->format('d M Y') ?? '-';
+
+                        return "<div class='leading-tight'>\n"
+                            . "<div class='font-semibold text-gray-900 py-1'>{$title}</div>\n"
+                            . "<div class='text-xs text-gray-600'>Disposisi: {$date}</div>\n"
+                            . "</div>";
+                    }),
 
                 TextColumn::make('dariWorker.nama')
                     ->label('Dari'),
@@ -88,17 +95,26 @@ class DisposisiResource extends Resource
                         'selesai' => 'success',
                     }
                 ),
-                TextColumn::make('created_at')->label('Tanggal')->dateTime(),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Action::make('Lihat Detail')
+                    ->label('')
+                    ->tooltip('Lihat Detail')
+                    ->icon('heroicon-o-eye')
+                    ->modalContent(
+                        fn($record) => view('filament.modals.detail-disposisi', ['record' => $record]) 
+                    )
+                    ->modalWidth('3x1'),
+                DeleteAction::make()
+                    ->requiresConfirmation()
+                    ->label('')
+                    ->tooltip('Hapus'),
             ])
+            ->actionsPosition(ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

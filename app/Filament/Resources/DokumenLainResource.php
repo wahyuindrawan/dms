@@ -3,21 +3,22 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\DokumenLainResource\Pages;
-use App\Filament\Resources\DokumenLainResource\RelationManagers;
 use App\Models\DokumenLain;
-use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DokumenLainResource extends Resource
 {
@@ -65,27 +66,42 @@ class DokumenLainResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('judul')->searchable(),
+                TextColumn::make('judul')
+                    ->label('Nama Dokumen')
+                    ->searchable()
+                    ->html()
+                    ->formatStateUsing(fn($record) => "
+                            <div class='leading-tight'>
+                                <div class='font-semibold text-gray-900 py-1'>{$record->judul}</div>
+                                <div class='text-xs text-gray-600 flex items-center gap-2'>
+                                    <img src='" . asset('icons/documen-file.png') . "' class='w-4 h-4 opacity-60 inline-block' />
+                                    " . \Carbon\Carbon::parse($record->tanggal_dokumen)->format('d M Y') . "
+                                </div>
+                            </div>
+                        "),
                 TextColumn::make('kategori.nama')->label('Kategori'),
                 TextColumn::make('sumber.nama')->label('Sumber'),
-                TextColumn::make('tanggal_dokumen')->date()->sortable(),
                 TextColumn::make('file_original')->label('Nama File')->toggleable(),
             ])
             ->defaultSort('tanggal_dokumen', 'desc')
             ->filters([])
             ->actions([
-                Tables\Actions\Action::make('Lihat Detail')
+                Action::make('Lihat Detail')
                     ->label('')
                     ->tooltip('Lihat detail')
                     ->icon('heroicon-o-eye')
                     ->modalContent(fn($record) => view('filament.modals.detail-dokumen-lain', ['record' => $record]))
                     ->modalWidth('3xl'),
-                Tables\Actions\DeleteAction::make()
+                DeleteAction::make()
                     ->label('')
                     ->tooltip('Hapus'),
             ])
+
+            ->actionsPosition(ActionsPosition::BeforeColumns)    
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                 BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
             ]);
     }
 
