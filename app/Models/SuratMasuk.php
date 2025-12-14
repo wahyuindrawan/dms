@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SuratMasuk extends Model
 {
-    use SoftDeletes; 
+    use SoftDeletes;
     protected $table = 'surat_masuk';
     protected static function booted()
     {
         static::creating(function ($surat) {
-            $surat->kode_surat = 'SM-' . str_pad((static::max('id') ?? 0) + 1, 4, '0', STR_PAD_LEFT);
+            $surat->kode_surat = 'SM-' . str_pad((static::withTrashed()->max('id') ?? 0) + 1, 4, '0', STR_PAD_LEFT);
         });
     }
 

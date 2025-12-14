@@ -7,6 +7,7 @@ use App\Models\Disposisi;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
@@ -109,6 +110,7 @@ class DisposisiResource extends Resource
                         fn($record) => view('filament.modals.detail-disposisi', ['record' => $record])
                     )
                     ->modalWidth('3xl'),
+
                 DeleteAction::make()
                     ->requiresConfirmation()
                     ->label('')
