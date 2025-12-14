@@ -25,7 +25,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->path('/')
             ->login(\App\Filament\Pages\Auth\Login::class)
             ->brandName('Sistem Manajemen Surat')
             ->favicon(asset('favicon.ico'))

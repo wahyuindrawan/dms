@@ -103,6 +103,36 @@ class SuratMasukResource extends Resource
                     )
                     ->modalWidth('3xl'),
 
+                Action::make('disposisi')
+                    ->label('')
+                    ->tooltip('Disposisi')
+                    ->icon('heroicon-o-paper-airplane')
+                    ->color('warning')
+                    ->form([
+                        Select::make('ke_worker_id')
+                            ->label('Disposisikan Kepada')
+                            ->options(\App\Models\Worker::all()->pluck('nama', 'id'))
+                            ->searchable()
+                            ->required(),
+                        Textarea::make('catatan')
+                            ->label('Catatan Disposisi')
+                            ->rows(3),
+                    ])
+                    ->action(function (SuratMasuk $record, array $data) {
+                        \App\Models\Disposisi::create([
+                            'surat_masuk_id' => $record->id,
+                            'dari_worker_id' => auth()->user()->worker_id,
+                            'ke_worker_id' => $data['ke_worker_id'],
+                            'catatan' => $data['catatan'],
+                            'status' => 'proses',
+                        ]);
+
+                        \Filament\Notifications\Notification::make()
+                            ->title('Disposisi berhasil dibuat')
+                            ->success()
+                            ->send();
+                    }),
+
                 DeleteAction::make()
                     ->requiresConfirmation()
                     ->label('')
