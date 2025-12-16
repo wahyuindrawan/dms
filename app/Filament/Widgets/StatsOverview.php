@@ -17,6 +17,10 @@ class StatsOverview extends BaseWidget
 {
     protected function getCards(): array
     {
+        $agendaTodayCount = Agenda::whereDate('waktu', now())->count();
+        $agendaDescription = $agendaTodayCount > 0 ? "{$agendaTodayCount} Agenda Hari Ini" : 'Tidak ada agenda hari ini';
+        $agendaColor = $agendaTodayCount > 0 ? 'warning' : 'primary';
+
         return [
             Stat::make('Surat Masuk', SuratMasuk::count())
                 ->description('Buat Surat Masuk')
@@ -34,8 +38,8 @@ class StatsOverview extends BaseWidget
                 ->url(DisposisiResource::getUrl('create')),
 
             Stat::make('Agenda', Agenda::count())
-                ->description('Buat Agenda')
-                ->color('primary')
+                ->description($agendaDescription)
+                ->color($agendaColor)
                 ->url(AgendaResource::getUrl('create')),
         ];
     }

@@ -5,16 +5,8 @@ namespace App\Filament\Pages;
 use App\Filament\Widgets\AgendaHariIni;
 use App\Filament\Widgets\DisposisiBadge;
 use App\Filament\Widgets\StatsOverview;
-use Filament\Pages\Page;
-use App\Models\Agenda;
-use App\Models\SuratMasuk;
-use App\Models\SuratKeluar;
-use App\Models\Disposisi;
-use Filament\Widgets\StatsOverviewWidget\Card;
+use App\Filament\Widgets\WelcomeWidget;
 use Filament\Pages\Dashboard as BaseDashboard;
-use Filament\Widgets\StatsOverviewWidget;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\View\View;
 
 class Dashboard extends BaseDashboard
 {
@@ -22,24 +14,26 @@ class Dashboard extends BaseDashboard
     protected static ?string $navigationIcon = 'heroicon-o-home';
     // protected static ?string $title = 'Dashboard';
     // protected static ?string $navigationLabel = 'Dashboard';
-    
+
     // protected static string $view = 'filament.pages.dashboard';
 
     protected function getHeaderWidgets(): array
     {
         return [
-            AgendaHariIni::class,
+            WelcomeWidget::class,
             DisposisiBadge::class,
+            AgendaHariIni::class,
             StatsOverview::class,
         ];
     }
 
-    public function render(): View
+    public function getWidgets(): array
     {
-        $agendaToday = Agenda::whereDate('tanggal', now())->get();
+        return [];
+    }
 
-        return view('filament.pages.dashboard', [
-            'agendaToday' => $agendaToday,
-        ]);
+    public function getHeaderWidgetsColumns(): int | string | array
+    {
+        return 3;
     }
 }

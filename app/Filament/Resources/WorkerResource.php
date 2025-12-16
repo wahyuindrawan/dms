@@ -41,8 +41,7 @@ class WorkerResource extends Resource
                     ->label('Nama Petugas')
                     ->required(),
                 TextInput::make('jabatan')
-                    ->label('Jabatan')
-                    ->required(),
+                    ->label('Jabatan'),
                 TextInput::make('email')
                     ->label('Email')
                     ->email(),

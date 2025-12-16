@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('kode_worker')->unique();
             $table->string('nama');
-            $table->string('jabatan');
+            $table->string('jabatan')->nullable();
             $table->string('email')->nullable();
             $table->string('telepon')->nullable();
             $table->text('keterangan')->nullable();
