@@ -20,7 +20,7 @@ class DisposisiBadge extends StatsOverviewWidget
             ->count();
 
         return [
-            Card::make('Disposisi Masuk', $jumlahDisposisiMasuk)
+            Card::make('Disposisi Saya', $jumlahDisposisiMasuk)
                 ->description('Klik untuk lihat detail')
                 ->descriptionIcon('heroicon-o-inbox')
                 ->color('warning')

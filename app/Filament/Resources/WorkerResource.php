@@ -10,6 +10,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -30,11 +33,22 @@ class WorkerResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('kode_worker')->required()->unique(ignoreRecord: true),
-                TextInput::make('nama')->required(),
-                TextInput::make('jabatan')->required(),
-                TextInput::make('email')->email(),
-                TextInput::make('telepon'),
+                TextInput::make('kode_worker')
+                    ->label('Kode Petugas')
+                    ->required()
+                    ->unique(ignoreRecord: true),
+                TextInput::make('nama')
+                    ->label('Nama Petugas')
+                    ->required(),
+                TextInput::make('jabatan')
+                    ->label('Jabatan')
+                    ->required(),
+                TextInput::make('email')
+                    ->label('Email')
+                    ->email(),
+                TextInput::make('telepon')
+                    ->label('Telepon')
+                    ->tel(),
                 Textarea::make('keterangan')->rows(3),
             ]);
     }
@@ -43,19 +57,35 @@ class WorkerResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('kode_worker')->sortable(),
-                TextColumn::make('nama')->searchable(),
-                TextColumn::make('jabatan'),
-                TextColumn::make('email')->copyable(),
+                TextColumn::make('kode_worker')
+                    ->label('Kode Petugas')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('nama')
+                    ->label('Nama Petugas')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('jabatan')
+                    ->searchable()
+                    ->label('Jabatan'),
+                TextColumn::make('email')
+                    ->label('Email')
+                    ->copyable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                ViewAction::make('view')
+                    ->label('')
+                    ->tooltip('Lihat detail')
+                    ->icon('heroicon-o-eye'),
+                DeleteAction::make()
+                    ->requiresConfirmation()
+                    ->label('')
+                    ->tooltip('Hapus')
             ])
+            ->actionsPosition(ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

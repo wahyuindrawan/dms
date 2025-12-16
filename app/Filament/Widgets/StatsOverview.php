@@ -20,26 +20,22 @@ class StatsOverview extends BaseWidget
         return [
             Stat::make('Surat Masuk', SuratMasuk::count())
                 ->description('Buat Surat Masuk')
-                ->descriptionIcon('heroicon-m-plus')
-                ->color('success')
+                ->color('primary')
                 ->url(SuratMasukResource::getUrl('create')),
 
             Stat::make('Surat Keluar', SuratKeluar::count())
                 ->description('Buat Surat Keluar')
-                ->descriptionIcon('heroicon-m-plus')
-                ->color('success')
+                ->color('primary')
                 ->url(SuratKeluarResource::getUrl('create')),
 
             Stat::make('Disposisi', Disposisi::count())
                 ->description('Buat Disposisi')
-                ->descriptionIcon('heroicon-m-plus')
-                ->color('success')
+                ->color('primary')
                 ->url(DisposisiResource::getUrl('create')),
 
             Stat::make('Agenda', Agenda::count())
                 ->description('Buat Agenda')
-                ->descriptionIcon('heroicon-m-plus')
-                ->color('success')
+                ->color('primary')
                 ->url(AgendaResource::getUrl('create')),
         ];
     }

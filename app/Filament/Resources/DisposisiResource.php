@@ -140,13 +140,6 @@ class DisposisiResource extends Resource
         ];
     }
 
-    public static function getNavigationBadge(): ?string
-    {
-        return (string) Disposisi::where('ke_worker_id', auth()->user()?->worker_id)
-            ->where('dibaca', false)
-            ->count();
-    }
-
     public function mount($record)
     {
         if ($record->ke_worker_id === auth()->user()?->worker_id && !$record->dibaca) {

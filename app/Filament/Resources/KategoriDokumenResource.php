@@ -3,9 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\KategoriDokumenResource\Pages;
-use App\Filament\Resources\KategoriDokumenResource\RelationManagers;
 use App\Models\KategoriDokumen;
-use Filament\Forms;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -13,8 +11,9 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Enums\ActionsPosition;
 
 class KategoriDokumenResource extends Resource
 {
@@ -46,15 +45,21 @@ class KategoriDokumenResource extends Resource
                 // TextColumn::make('created_at')->dateTime('d M Y')->label('Dibuat'),
             ])
             ->defaultSort('nama')
-            
+
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                ViewAction::make('view')
+                    ->label('')
+                    ->tooltip('Lihat detail')
+                    ->icon('heroicon-o-eye'),
+                DeleteAction::make()
+                    ->requiresConfirmation()
+                    ->label('')
+                    ->tooltip('Hapus')
             ])
+            ->actionsPosition(ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

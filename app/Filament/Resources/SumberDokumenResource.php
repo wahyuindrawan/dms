@@ -3,24 +3,19 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SumberDokumenResource\Pages;
-use App\Filament\Resources\SumberDokumenResource\RelationManagers;
 use App\Models\SumberDokumen;
 use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SumberDokumenResource extends Resource
 {
@@ -48,10 +43,18 @@ class SumberDokumenResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('kode_sumber'),
-                TextColumn::make('nama'),
-                TextColumn::make('tipe')->badge(),
-                // TextColumn::make('created_at')->date(),
+                TextColumn::make('kode_sumber')
+                    ->label('Kode')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('nama')
+                    ->label('Asal Dokumen')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('tipe')
+                    ->label('Tipe')
+                    ->searchable()
+                    ->badge(),
             ])
             ->filters([
                 //
@@ -61,16 +64,13 @@ class SumberDokumenResource extends Resource
                     ->label('')
                     ->tooltip('Lihat detail')
                     ->icon('heroicon-o-eye'),
-                EditAction::make()
-                    ->label('')
-                    ->tooltip('Lihat detail')
-                    ->icon('heroicon-o-pencil'),
                 DeleteAction::make()
                     ->requiresConfirmation()
                     ->label('')
                     ->tooltip('Hapus')
-                    // ->visible(fn ($record) => !$record->trashed()), // hanya tampil jika belum dihapus,,
+                // ->visible(fn ($record) => !$record->trashed()), // hanya tampil jika belum dihapus,,
             ])
+            ->actionsPosition(ActionsPosition::BeforeColumns)
             ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
