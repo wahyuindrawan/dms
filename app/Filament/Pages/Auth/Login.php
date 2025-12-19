@@ -9,16 +9,6 @@ use Illuminate\Contracts\Support\Htmlable;
 
 class Login extends BaseLogin
 {
-    public function getHeading(): string | Htmlable
-    {
-        return 'Selamat Datang';
-    }
-
-    public function getSubheading(): string | Htmlable
-    {
-        return 'Silakan masuk ke Sistem Manajemen Surat';
-    }
-
     protected function getEmailFormComponent(): Component
     {
         return TextInput::make('email')
@@ -38,7 +28,6 @@ class Login extends BaseLogin
             ->required()
             ->placeholder('Masukkan password Anda');
     }
-
 
     protected static string $view = 'filament.pages.auth.login';
 

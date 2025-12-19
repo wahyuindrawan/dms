@@ -72,6 +72,7 @@ class DisposisiResource extends Resource
             ->columns([
                 TextColumn::make('suratMasuk.judul')
                     ->label('Nama Dokumen')
+                    ->searchable()
                     ->html()
                     ->formatStateUsing(function ($state, $record) {
                         $title = $record->suratMasuk?->judul ?? '-';

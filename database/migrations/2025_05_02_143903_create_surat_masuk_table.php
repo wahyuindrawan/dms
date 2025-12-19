@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('perihal')->nullable();
             $table->date('tanggal_surat');
             $table->date('tanggal_masuk');
-            $table->foreignId('kategori_id')->nullable()->constrained('kategori_dokumens')->onDelete('set null');
-            $table->foreignId('sumber_id')->nullable()->constrained('sumber_dokumens')->onDelete('set null');
+            $table->foreignId('kategori_id')->nullable()->constrained('kategori_dokumen')->onDelete('set null');
+            $table->foreignId('sumber_id')->nullable()->constrained('sumber_dokumen')->onDelete('set null');
             $table->text('deskripsi')->nullable();
             $table->string('file_path')->nullable();
             $table->string('file_original')->nullable();

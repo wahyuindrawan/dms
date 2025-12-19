@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class WorkerResource extends Resource
 {
     protected static ?string $model = Worker::class;
+    protected static ?string $pluralModelLabel = "Karyawan";
+    protected static ?string $modelLabel = "Karyawan";
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationGroup = 'Data Dasar';
     protected static ?string $navigationLabel = "Karyawan";

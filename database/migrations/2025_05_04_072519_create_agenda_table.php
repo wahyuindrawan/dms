@@ -23,8 +23,8 @@ return new class extends Migration
 
         Schema::create('agenda_worker', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('agenda_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('worker_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('agenda_id')->constrained('agenda')->cascadeOnDelete();
+            $table->foreignId('worker_id')->constrained('workers')->cascadeOnDelete();
         });
     }
 

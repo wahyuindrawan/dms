@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('nomor_surat')->nullable();
             $table->string('judul');
             $table->string('perihal')->nullable();
-            $table->foreignId('kategori_id')->nullable()->constrained('kategori_dokumens')->nullOnDelete();
-            $table->foreignId('sumber_id')->nullable()->constrained('sumber_dokumens')->nullOnDelete();
+            $table->foreignId('kategori_id')->nullable()->constrained('kategori_dokumen')->nullOnDelete();
+            $table->foreignId('sumber_id')->nullable()->constrained('sumber_dokumen')->nullOnDelete();
             $table->date('tanggal_surat');
             $table->date('tanggal_keluar');
             $table->string('ditujukan')->nullable();

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('kode_dokumen')->unique();
             $table->string('judul');
-            $table->foreignId('kategori_id')->nullable()->constrained('kategori_dokumens')->nullOnDelete();
-            $table->foreignId('sumber_id')->nullable()->constrained('sumber_dokumens')->nullOnDelete();
+            $table->foreignId('kategori_id')->nullable()->constrained('kategori_dokumen')->nullOnDelete();
+            $table->foreignId('sumber_id')->nullable()->constrained('sumber_dokumen')->nullOnDelete();
             $table->date('tanggal_dokumen');
             $table->string('file_path')->nullable();
             $table->string('file_original')->nullable();

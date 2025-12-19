@@ -22,7 +22,7 @@ $agendaToday = Agenda::whereDate('waktu', now())->get();
     </ul>
     @endif
 
-    <div class="mt-4 text-right">
+    <div class="mt-4">
         <a href="{{ App\Filament\Resources\AgendaResource::getUrl() }}" class="text-sm font-medium text-primary-600 hover:text-primary-500">
             Lihat Agenda Lainnya &rarr;
         </a>
