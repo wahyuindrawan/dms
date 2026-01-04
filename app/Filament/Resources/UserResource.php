@@ -35,7 +35,7 @@ class UserResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
-                    ->label('Nama Lengkap')
+                    ->label('Username')
                     ->required(),
 
                 TextInput::make('email')
