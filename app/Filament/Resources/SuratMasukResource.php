@@ -60,7 +60,6 @@ class SuratMasukResource extends Resource
                 ->directory('surat-masuk')
                 ->acceptedFileTypes(['application/pdf', 'application/msword', 'image/*'])
                 ->maxSize(2048)
-                ->preserveFilenames()
                 ->storeFileNamesIn('file_original'),
         ]);
     }

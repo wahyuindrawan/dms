@@ -61,7 +61,6 @@ class SuratKeluarResource extends Resource
                     ->label('Keterangan'),
                 FileUpload::make('file_path')
                     ->label('Upload Dokumen')
-                    ->preserveFilenames()
                     ->storeFileNamesIn('file_original')
                     ->acceptedFileTypes(['application/pdf', 'image/*', 'application/msword'])
                     ->directory('surat-keluar')

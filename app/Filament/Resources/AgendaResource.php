@@ -38,7 +38,6 @@ class AgendaResource extends Resource
                     ->disk('public')
                     ->directory('agenda')
                     ->acceptedFileTypes(['application/pdf', 'image/*'])
-                    ->preserveFilenames()
                     ->maxSize(2048),
                 Select::make('workers')
                     ->label('Karyawan')

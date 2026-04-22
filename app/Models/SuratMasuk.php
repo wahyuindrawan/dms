@@ -4,15 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\ManageDocumentFileName;
 
 class SuratMasuk extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, ManageDocumentFileName;
     protected $table = 'surat_masuk';
     protected static function booted()
     {
         static::creating(function ($surat) {
             $surat->kode_surat = 'SM-' . str_pad((static::withTrashed()->max('id') ?? 0) + 1, 4, '0', STR_PAD_LEFT);
+        });
+        
+        static::created(function ($surat) {
+            $surat->renameUploadedFile();
+        });
+        
+        static::updated(function ($surat) {
+            if ($surat->isDirty('judul') || $surat->isDirty('file_path')) {
+                $surat->renameUploadedFile();
+            }
         });
     }
 

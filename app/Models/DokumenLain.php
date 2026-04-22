@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\ManageDocumentFileName;
 
 class DokumenLain extends Model
 {
+    use ManageDocumentFileName;
     protected $table = 'dokumen_lain';
     protected $fillable = [
         'kode_dokumen',
@@ -22,6 +24,16 @@ class DokumenLain extends Model
     {
         static::creating(function ($model) {
             $model->kode_dokumen = 'DKM-' . str_pad((static::max('id') ?? 0) + 1, 4, '0', STR_PAD_LEFT);
+        });
+        
+        static::created(function ($model) {
+            $model->renameUploadedFile();
+        });
+        
+        static::updated(function ($model) {
+            if ($model->isDirty('judul') || $model->isDirty('file_path')) {
+                $model->renameUploadedFile();
+            }
         });
     }
 

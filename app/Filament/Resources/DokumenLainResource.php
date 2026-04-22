@@ -49,7 +49,6 @@ class DokumenLainResource extends Resource
                     ->nullable(),
                 FileUpload::make('file_path')
                     ->label('Upload Dokumen')
-                    ->preserveFilenames()
                     ->storeFileNamesIn('file_original')
                     ->acceptedFileTypes(['application/pdf', 'application/msword', 'image/*'])
                     ->directory('dokumen-lain')
