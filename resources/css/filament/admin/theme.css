@@ -87,6 +87,7 @@
     border-radius: 1rem; /* Rounded-2xl */
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
         0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Header Section di Kolom Kiri */
@@ -96,16 +97,20 @@
 }
 
 .login-heading {
+    font-family: 'Roboto', sans-serif;
     font-size: 1.875rem;
     font-weight: 700;
     color: #111827;
     margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
 }
 
 .login-subheading {
+    font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     color: #6b7280;
     font-weight: 400;
+    letter-spacing: 0.3px;
 }
 
 /* Kolom kanan - Informasi */
@@ -168,17 +173,21 @@
 }
 
 .login-info-title {
+    font-family: 'Roboto', sans-serif;
     font-size: 1.75rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
     color: white;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: -0.5px;
 }
 
 .login-info-subtitle {
+    font-family: 'Roboto', sans-serif;
     font-size: 1.125rem;
     color: rgba(255, 255, 255, 0.9);
     font-weight: 300;
+    letter-spacing: 0.3px;
 }
 
 /* Features List */
@@ -213,6 +222,7 @@
 }
 
 .feature-text h3 {
+    font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     font-weight: 600;
     margin-bottom: 0.25rem;
@@ -220,6 +230,7 @@
 }
 
 .feature-text p {
+    font-family: 'Roboto', sans-serif;
     font-size: 0.875rem;
     color: rgba(255, 255, 255, 0.85);
     line-height: 1.4;
