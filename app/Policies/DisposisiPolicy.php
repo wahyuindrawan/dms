@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Disposisi;
+use App\Models\Legacy\Disposisi;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 

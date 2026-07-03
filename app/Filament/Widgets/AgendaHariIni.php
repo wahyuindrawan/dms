@@ -11,5 +11,10 @@ class AgendaHariIni extends Widget
 
     protected int|string|array $columnSpan = 1;
 
-    protected static bool $isLazy = false; // agar view langsung dirender dan bisa ambil data dalam view
+    protected static bool $isLazy = false;
+
+    public static function canView(): bool
+    {
+        return false;
+    }
 }

@@ -1,4 +1,7 @@
 <?php
+// DEPRECATED — 2026-07-02
+// Digantikan oleh: units table + field source_name di documents
+// Rekomendasi: Pindahkan ke database/migrations/legacy/
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

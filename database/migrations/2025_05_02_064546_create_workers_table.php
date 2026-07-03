@@ -1,4 +1,7 @@
 <?php
+// DEPRECATED — 2026-07-02
+// Digantikan oleh: 2026_07_02_000001_create_units_table
+// Rekomendasi: Pindahkan ke database/migrations/legacy/
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

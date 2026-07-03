@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\SuratKeluar;
+use App\Models\Legacy\SuratKeluar;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 

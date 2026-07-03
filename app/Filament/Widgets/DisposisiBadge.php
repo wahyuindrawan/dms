@@ -10,4 +10,9 @@ class DisposisiBadge extends Widget
 {
     protected static string $view = 'filament.widgets.disposisi-badge';
     protected int | string | array $columnSpan = 1;
+
+    public static function canView(): bool
+    {
+        return false;
+    }
 }

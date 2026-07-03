@@ -1,4 +1,7 @@
 <?php
+// DEPRECATED — 2026-07-02
+// Fitur disposisi akan didesain ulang sebagai document_routing di fase berikutnya.
+// Rekomendasi: Pindahkan ke database/migrations/legacy/
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

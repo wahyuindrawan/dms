@@ -1,4 +1,8 @@
 <?php
+// DEPRECATED — 2026-07-02
+// Fitur Agenda di luar scope SIM Manajemen Dokumen v2.
+// Akan dipertimbangkan sebagai modul terpisah (SIM Agenda).
+// Rekomendasi: Pindahkan ke database/migrations/legacy/
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

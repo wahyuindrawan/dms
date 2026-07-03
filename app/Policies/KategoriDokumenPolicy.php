@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\KategoriDokumen;
+use App\Models\Legacy\KategoriDokumen;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 

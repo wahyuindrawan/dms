@@ -3,8 +3,8 @@ services:
         build:
             context: .
             dockerfile: docker/Dockerfile
-        container_name: 'surat-app'
-        image: surat-app:1.0.0
+        container_name: 'dms'
+        image: dms:1.0.0
         ports:
             - "8092:8080"
         restart: unless-stopped
@@ -19,7 +19,7 @@ services:
             DB_CONNECTION: mysql
             DB_HOST: db
             DB_PORT: 3306
-            DB_DATABASE: surat-app
+            DB_DATABASE: db_dms
             DB_USERNAME: dev
             DB_PASSWORD: dev
             BROADCAST_DRIVER: log
@@ -34,28 +34,28 @@ services:
             TZ: 'Asia/Jakarta'
             DEBUGBAR_ENABLED: false
         volumes:
-            - surat-app_logs:/var/www/html/storage/logs
-            - surat-app_storage:/var/www/html/storage/app
-            - surat-app_nginx_logs:/var/log/nginx
+            - dms_logs:/var/www/html/storage/logs
+            - dms_storage:/var/www/html/storage/app
+            - dms_nginx_logs:/var/log/nginx
         depends_on:
             db:
                 condition: service_healthy
         networks:
-            - surat-app_network
+            - dms_network
 
     db:
         image: mysql:8.0
-        container_name: surat-app-db
+        container_name: dms-db
         environment:
-            MYSQL_ROOT_PASSWORD: surat-app
-            MYSQL_DATABASE: surat-app
-            MYSQL_USER: surat-app
-            MYSQL_PASSWORD: surat-app
+            MYSQL_ROOT_PASSWORD: dms
+            MYSQL_DATABASE: db_dms
+            MYSQL_USER: dms
+            MYSQL_PASSWORD: dms
             TZ: 'Asia/Jakarta'
         ports:
             - "3308:3306"
         volumes:
-            - surat-app_db:/var/lib/mysql
+            - dms_db:/var/lib/mysql
             - ./docker/my.cnf:/etc/mysql/conf.d/my.cnf:ro
             - ./docker/init/mysql:/docker-entrypoint-initdb.d
         healthcheck:
@@ -66,11 +66,11 @@ services:
             start_period: 60s
         restart: unless-stopped
         networks:
-            - surat-app_network
+            - dms_network
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin:latest
-        container_name: surat-app-phpmyadmin
+        container_name: dms-phpmyadmin
         environment:
             PMA_HOST: db
             PMA_PORT: 3306
@@ -83,18 +83,18 @@ services:
             - "8092:80"
         restart: unless-stopped
         networks:
-            - surat-app_network
+            - dms_network
 
 volumes:
-    surat-app_db:
-        name: "surat-app_db"
-    surat-app_logs:
-        name: "surat-app_logs"
-    surat-app_storage:
-        name: "surat-app_storage"
-    surat-app_nginx_logs:
-        name: "surat-app_nginx_logs"
+    dms_db:
+        name: "dms_db"
+    dms_logs:
+        name: "dms_logs"
+    dms_storage:
+        name: "dms_storage"
+    dms_nginx_logs:
+        name: "dms_nginx_logs"
 
 networks:
-    surat-app_network:
-        name: "surat-app_network"
+    dms_network:
+        name: "dms_network"

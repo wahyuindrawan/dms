@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Agenda;
+use App\Models\Legacy\Agenda;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 

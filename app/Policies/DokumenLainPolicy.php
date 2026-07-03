@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\DokumenLain;
+use App\Models\Legacy\DokumenLain;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 

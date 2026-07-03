@@ -1,7 +1,7 @@
 @php
 $user = auth()->user();
-$namaWorker = $user?->worker?->nama ?? $user->name;
-$jabatan = $user?->worker?->jabatan ?? 'Pegawai';
+$namaWorker = $user->name;
+$jabatan = $user->userRole?->display_name ?? 'Pegawai';
 @endphp
 
 <x-filament::card class="h-full">
