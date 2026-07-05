@@ -27,7 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('/')
             ->login(\App\Filament\Pages\Auth\Login::class)
-            ->brandName('Sistem Manajemen Surat')
+            ->brandName('DMS - Document Management System')
             ->favicon(asset('favicon.ico'))
             ->colors([
                 // 'primary' => Color::Amber,

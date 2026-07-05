@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Sistem Manajemen Surat</title>
+    <title>Login - Document Management System</title>
 
     {{-- Google Fonts - Roboto --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -6,7 +6,7 @@
                 {{-- Header Section --}}
                 <div class="login-header-section">
                     <h2 class="login-heading">Selamat Datang</h2>
-                    <p class="login-subheading">Silakan masuk ke Sistem Manajemen Surat</p>
+                    <p class="login-subheading">Silakan masuk ke Document Management System</p>
                 </div>
 
                 {{-- Form --}}
