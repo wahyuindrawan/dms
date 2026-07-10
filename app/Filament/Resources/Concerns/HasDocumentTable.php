@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Concerns;
 use Filament\Tables;
 use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Trait HasDocumentTable
@@ -166,12 +167,10 @@ trait HasDocumentTable
                             ?? $record->files()->first();
 
                         if ($file) {
-                            $url = asset('storage/' . $file->file_path);
-                            // Redirect ke URL file untuk preview/download
-                            return redirect($url);
+                            return redirect()->route('document-file.preview', ['file' => $file->id]); //inline route preview
                         }
                     })
-                    ->openUrlInNewTab(),
+                    ->openUrlInNewTab(), // perintah untuk membuka di tab baru
 
                 Tables\Actions\DeleteAction::make()
                     ->requiresConfirmation(),

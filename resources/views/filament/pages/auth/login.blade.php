@@ -6,7 +6,7 @@
                 {{-- Header Section --}}
                 <div class="login-header-section">
                     <h2 class="login-heading">Selamat Datang</h2>
-                    <p class="login-subheading">Silakan masuk ke Document Management System</p>
+                    <p class="login-subheading">Silakan masuk ke SIM Manajemen Dokumen</p>
                 </div>
 
                 {{-- Form --}}
@@ -26,48 +26,40 @@
         <div class="login-info-content">
             <div class="login-info-header">
                 <div class="login-info-logo">
-                    <svg class="login-logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
+                    <x-heroicon-o-folder class="w-24 h-24" />
                 </div>
-                <h2 class="login-info-title">Sistem Manajemen Surat</h2>
-                <p class="login-info-subtitle">Platform Digital untuk Pengelolaan Surat Menyurat</p>
+                <h2 class="login-info-title">Sistem Informasi Manajemen Dokumen</h2>
+                <p class="login-info-subtitle">Aplikasi Terintegrasi untuk Pengelolaan, Pengarsipan, dan Monitoring Dokumen Internal Organisasi.</p>
             </div>
 
             <div class="login-info-features">
                 <div class="feature-item">
                     <div class="feature-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                        </svg>
+                        <x-heroicon-o-document class="w-8 h-8" />
                     </div>
                     <div class="feature-text">
-                        <h3>Surat Masuk & Keluar</h3>
-                        <p>Kelola surat masuk dan keluar dengan mudah dan terstruktur</p>
+                        <h3>Pengelolaan Dokumen</h3>
+                        <p>Mengelola dokumen RUK, RPK, Surat Keputusan, SOP, serta dokumen pendukung lainnya secara terstruktur.</p>
                     </div>
                 </div>
 
                 <div class="feature-item">
                     <div class="feature-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
+                        <x-heroicon-o-archive-box class="w-8 h-8" />
                     </div>
                     <div class="feature-text">
-                        <h3>Agenda & Disposisi</h3>
-                        <p>Atur agenda dan disposisi dokumen secara efisien</p>
+                        <h3>Arsip Digital</h3>
+                        <p>Memudahkan pencarian dan pengelompokan dokumen berdasarkan tahun, unit kerja, jenis dokumen, dan klaster.</p>
                     </div>
                 </div>
 
                 <div class="feature-item">
                     <div class="feature-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
+                        <x-heroicon-o-chart-bar class="w-8 h-8" />
                     </div>
                     <div class="feature-text">
-                        <h3>Laporan & Monitoring</h3>
-                        <p>Pantau dan analisis data surat secara real-time</p>
+                        <h3>Dashboard & Laporan</h3>
+                        <p>Menyajikan informasi statistik dokumen dan laporan sebagai dasar monitoring dan evaluasi.</p>
                     </div>
                 </div>
             </div>
