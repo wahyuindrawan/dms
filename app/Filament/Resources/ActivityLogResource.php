@@ -96,18 +96,11 @@ class ActivityLogResource extends Resource
                         'deleted' => 'Dihapus',
                     ]),
 
-                Tables\Filters\Filter::make('causer_id')
-                    ->form([
-                        Forms\Components\Select::make('causer_id')
-                            ->label('Pengguna')
-                            ->relationship('causer', 'name')
-                            ->searchable()
-                            ->preload(),
-                    ])
-                    ->query(fn ($query, array $data) => $query->when(
-                        $data['causer_id'],
-                        fn ($q) => $q->where('causer_id', $data['causer_id'])
-                    )),
+                Tables\Filters\SelectFilter::make('causer_id')
+                    ->label('Pengguna')
+                    ->relationship('causer', 'name')
+                    ->searchable()
+                    ->preload(),
 
                 Tables\Filters\Filter::make('created_at')
                     ->form([
