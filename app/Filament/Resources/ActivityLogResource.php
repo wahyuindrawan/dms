@@ -98,7 +98,7 @@ class ActivityLogResource extends Resource
 
                 Tables\Filters\SelectFilter::make('causer_id')
                     ->label('Pengguna')
-                    ->relationship('causer', 'name')
+                    ->relationship('causer', 'name', fn ($query) => $query->select('id', 'name'))
                     ->searchable()
                     ->preload(),
 
