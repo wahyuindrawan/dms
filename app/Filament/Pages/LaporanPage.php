@@ -31,16 +31,12 @@ class LaporanPage extends Page implements HasForms
     protected static string  $view            = 'filament.pages.laporan';
 
     // Form state
-    public ?int $year           = null;
-    public ?int $documentTypeId = null;
-    public ?int $unitId         = null;
-    public ?int $categoryId     = null;
+    public array $data = [];
 
     public function mount(): void
     {
-        $this->year = (int) date('Y');
         $this->form->fill([
-            'year'           => $this->year,
+            'year'           => (int) date('Y'),
             'documentTypeId' => null,
             'unitId'         => null,
             'categoryId'     => null,
