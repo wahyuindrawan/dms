@@ -69,6 +69,6 @@ class Agenda extends Model
 
     public function workers()
     {
-        return $this->belongsToMany(Worker::class, 'agenda_worker', 'agenda_id', 'worker_id');
+        return $this->belongsToMany(\App\Models\User::class, 'agenda_user', 'agenda_id', 'user_id');
     }
 }

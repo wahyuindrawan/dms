@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Legacy;
 use App\Filament\Resources\Legacy\AgendaResource\Pages;
 use App\Models\Legacy\Agenda;
 use App\Models\Legacy\Worker;
+use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -37,16 +38,18 @@ class AgendaResource extends Resource
                     ->acceptedFileTypes(['application/pdf', 'image/*'])
                     ->maxSize(2048),
                 Select::make('workers')
-                    ->label('Karyawan')
+                    ->label('Peserta (User)')
                     ->multiple()
-                    ->relationship('workers', 'nama')
+                    ->relationship('workers', 'name', function ($query) {
+                        return $query->whereNotNull('id');
+                    })
                     ->options(function () {
-                        $options = Worker::pluck('nama', 'id')->toArray();
-                        return ['ALL' => 'Semua Karyawan'] + $options;
+                        $options = User::whereNotNull('id')->pluck('name', 'id')->toArray();
+                        return ['ALL' => 'Semua Peserta'] + $options;
                     })
                     ->required()
                     ->searchable()
-                    ->dehydrated(false) // Jangan langsung disimpan ke DB
+                    ->dehydrated(false)
                     ->preload()
                     ->columnSpanFull(),
             ]);
@@ -76,13 +79,13 @@ class AgendaResource extends Resource
                     ->sortable()
                     ->toggleable(),
 
-                TextColumn::make('workers.nama')
+                TextColumn::make('workers.name')
                     ->label('Peserta')
                     ->formatStateUsing(function ($state, $record) {
-                        $totalWorker = Worker::count();
-                        return count($record->workers) === $totalWorker
-                            ? 'Semua Karyawan'
-                            : implode(', ', $record->workers->pluck('nama')->take(3)->toArray()) . (count($record->workers) > 3 ? '...' : '');
+                        $totalUsers = User::whereNotNull('id')->count();
+                        return count($record->workers) === $totalUsers
+                            ? 'Semua Peserta'
+                            : implode(', ', $record->workers->pluck('name')->take(3)->toArray()) . (count($record->workers) > 3 ? '...' : '');
                     })
                     ->toggleable(),
             ])

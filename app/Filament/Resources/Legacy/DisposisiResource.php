@@ -36,10 +36,10 @@ class DisposisiResource extends Resource
         return $form
             ->schema([
 
-                Select::make('surat_masuk_id')
-                    ->relationship('suratMasuk', 'judul')
-                    ->label('Surat Masuk')
-                    ->searchable()
+                Textarea::make('deskripsi_dokumen')
+                    ->label('Deskripsi Dokumen/Surat')
+                    ->rows(2)
+                    ->placeholder('Contoh: Surat Masuk - Perihal Permohonan Izin...')
                     ->required(),
 
                 Select::make('ke_worker_id')
@@ -67,12 +67,12 @@ class DisposisiResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('suratMasuk.judul')
-                    ->label('Nama Dokumen')
+                TextColumn::make('deskripsi_dokumen')
+                    ->label('Dokumen/Surat')
                     ->searchable()
                     ->html()
                     ->formatStateUsing(function ($state, $record) {
-                        $title = $record->suratMasuk?->judul ?? '-';
+                        $title = $state ?? '-';
                         $date = $record->created_at?->format('d M Y') ?? '-';
 
                         return "<div class='leading-tight'>\n"
