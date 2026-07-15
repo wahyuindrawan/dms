@@ -20,11 +20,6 @@ class Disposisi extends Model
         'dibaca_pada',
     ];
 
-    public function suratMasuk()
-    {
-        return $this->belongsTo(SuratMasuk::class);
-    }
-
     public function dariWorker(): BelongsTo
     {
         return $this->belongsTo(Worker::class, 'dari_worker_id');

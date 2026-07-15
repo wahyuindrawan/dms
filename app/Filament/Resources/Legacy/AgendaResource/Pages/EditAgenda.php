@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Legacy\AgendaResource\Pages;
 
 use App\Filament\Resources\Legacy\AgendaResource;
-use App\Models\Legacy\Worker;
+use App\Models\User;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
@@ -20,11 +20,11 @@ class EditAgenda extends EditRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $workerSelection = $this->form->getState()['worker_selection'] ?? [];
+        $userSelection = $this->form->getState()['workers'] ?? [];
 
-        $data['workers'] = in_array('ALL', $workerSelection)
-            ? Worker::pluck('id')->toArray()
-            : array_map('intval', $workerSelection);
+        $data['workers'] = in_array('ALL', $userSelection)
+            ? User::whereNotNull('id')->pluck('id')->toArray()
+            : array_map('intval', $userSelection);
 
         return $data;
     }
