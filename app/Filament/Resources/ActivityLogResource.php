@@ -25,6 +25,39 @@ class ActivityLogResource extends Resource
     // Hanya dapat dilihat, tidak bisa dibuat/diubah dari UI
     public static function canCreate(): bool { return false; }
 
+    public static function canViewAny(): bool 
+    { 
+        return auth()->user()?->userRole?->nama === 'admin';   
+    }
+
+    public static function canView($record): bool 
+    { 
+        return auth()->user()?->userRole?->nama === 'admin'; 
+    }
+
+    public static function canUpdate($record): bool 
+    { 
+        return false; 
+    }
+
+    public static function canDelete($record): bool 
+    { 
+        return false; 
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->userRole?->nama === 'admin';
+    }
+
+    public function mount(): void
+    {
+        // Hanya admin yang dapat mengakses halaman ini
+        if (auth()->user()?->userRole?->nama !== 'admin') {
+            abort(403, 'Akses ditolak. Anda tidak memiliki izin untuk mengakses halaman ini.');
+        }
+    }
+
     public static function form(Form $form): Form
     {
         return $form->schema([
