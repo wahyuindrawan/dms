@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Document extends Model
 {
-    use HasFactory, SoftDeletes, LogsActivity;
+    use HasFactory, LogsActivity, SoftDeletes;
 
     protected $table = 'documents';
 
@@ -43,7 +43,7 @@ class Document extends Model
     protected $casts = [
         'document_date' => 'date',
         'received_date' => 'date',
-        'issued_date'   => 'date',
+        'issued_date' => 'date',
     ];
 
     public function getActivitylogOptions(): LogOptions
@@ -57,7 +57,7 @@ class Document extends Model
                 'created' => "Dokumen \"{$this->title}\" ditambahkan",
                 'updated' => "Dokumen \"{$this->title}\" diubah",
                 'deleted' => "Dokumen \"{$this->title}\" dihapus",
-                default   => "Dokumen \"{$this->title}\" {$eventName}",
+                default => "Dokumen \"{$this->title}\" {$eventName}",
             });
     }
 
@@ -137,10 +137,10 @@ class Document extends Model
     protected static function booted()
     {
         static::creating(function ($document) {
-            if (!$document->doc_number) {
+            if (! $document->doc_number) {
                 $document->doc_number = static::generateNumber($document);
             }
-            if (auth()->check() && !$document->created_by) {
+            if (auth()->check() && ! $document->created_by) {
                 $document->created_by = auth()->id();
             }
         });
@@ -155,8 +155,8 @@ class Document extends Model
     public static function generateNumber($document): string
     {
         $type = DocumentType::find($document->document_type_id);
-        if (!$type) {
-            return 'DOC-' . uniqid();
+        if (! $type) {
+            return 'DOC-'.uniqid();
         }
 
         $date = $document->document_date ? \Carbon\Carbon::parse($document->document_date) : now();
@@ -168,10 +168,10 @@ class Document extends Model
             ->whereYear('document_date', $year)
             ->count() + 1;
 
-        $paddedSeq = str_pad((string)$seq, $type->seq_length ?? 4, '0', STR_PAD_LEFT);
+        $paddedSeq = str_pad((string) $seq, $type->seq_length ?? 4, '0', STR_PAD_LEFT);
 
         $format = $type->numbering_format ?? '{prefix}{seq}/{mm}/{yyyy}';
-        
+
         $replacements = [
             '{prefix}' => $type->prefix ?? 'DOC-',
             '{seq}' => $paddedSeq,

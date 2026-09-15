@@ -4,7 +4,6 @@ namespace App\Filament\Resources\Concerns;
 
 use App\Models\DocumentType;
 use Filament\Forms;
-use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -18,10 +17,11 @@ trait HasDocumentForm
 {
     /**
      * Section informasi utama dokumen.
-     * @param string $typeCode  Kode jenis dokumen: SK, SOP, RUK, RPK
-     * @param string $label     Label dokumen untuk placeholder
-     * @param bool   $withCluster  Tampilkan pilihan Klaster/Cluster
-     * @param bool   $withDirection  Tampilkan pilihan Arah Dokumen
+     *
+     * @param  string  $typeCode  Kode jenis dokumen: SK, SOP, RUK, RPK
+     * @param  string  $label  Label dokumen untuk placeholder
+     * @param  bool  $withCluster  Tampilkan pilihan Klaster/Cluster
+     * @param  bool  $withDirection  Tampilkan pilihan Arah Dokumen
      */
     protected static function documentInfoSection(
         string $typeCode,
@@ -118,11 +118,12 @@ trait HasDocumentForm
 
     /**
      * Section file upload dengan PDF preview.
-     * @param string $typeCode  Kode jenis dokumen untuk direktori penyimpanan
+     *
+     * @param  string  $typeCode  Kode jenis dokumen untuk direktori penyimpanan
      */
     protected static function fileUploadSection(string $typeCode): Forms\Components\Section
     {
-        $dir = 'documents/' . strtolower($typeCode) . '/' . date('Y');
+        $dir = 'documents/'.strtolower($typeCode).'/'.date('Y');
 
         return Forms\Components\Section::make('File Dokumen')
             ->description('Upload file PDF. Centang "File Utama" untuk file yang paling relevan.')
@@ -147,10 +148,10 @@ trait HasDocumentForm
                         Forms\Components\Select::make('file_type')
                             ->label('Jenis File')
                             ->options([
-                                'original'   => 'Asli / Scan',
-                                'signed'     => 'Telah Ditandatangani',
+                                'original' => 'Asli / Scan',
+                                'signed' => 'Telah Ditandatangani',
                                 'attachment' => 'Lampiran',
-                                'draft'      => 'Draft',
+                                'draft' => 'Draft',
                             ])
                             ->default('original')
                             ->required()
@@ -178,10 +179,10 @@ trait HasDocumentForm
     protected static function statusOptions(): array
     {
         return [
-            'draft'    => 'Draft',
-            'active'   => 'Aktif',
+            'draft' => 'Draft',
+            'active' => 'Aktif',
             'archived' => 'Diarsipkan',
-            'void'     => 'Dibatalkan',
+            'void' => 'Dibatalkan',
         ];
     }
 }

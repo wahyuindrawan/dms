@@ -15,11 +15,17 @@ class RoleResource extends Resource
     protected static ?string $model = Role::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shield-check';
+
     protected static ?string $navigationGroup = 'Master Data';
+
     protected static ?string $navigationLabel = 'Peran & Izin';
+
     protected static ?string $pluralModelLabel = 'Peran & Izin';
+
     protected static ?string $modelLabel = 'Peran & Izin';
+
     protected static ?int $navigationSort = 5;
+
     protected static ?string $slug = 'peran-izin';
 
     public static function form(Form $form): Form
@@ -54,11 +60,11 @@ class RoleResource extends Resource
                     Forms\Components\Select::make('color')
                         ->label('Warna Badge')
                         ->options([
-                            'blue'   => '🔵 Biru (Admin)',
-                            'green'  => '🟢 Hijau (Pimpinan)',
+                            'blue' => '🔵 Biru (Admin)',
+                            'green' => '🟢 Hijau (Pimpinan)',
                             'yellow' => '🟡 Kuning (TU)',
-                            'red'    => '🔴 Merah',
-                            'gray'   => '⚪ Abu-abu (Default)',
+                            'red' => '🔴 Merah',
+                            'gray' => '⚪ Abu-abu (Default)',
                         ])
                         ->default('gray')
                         ->searchable(),
@@ -109,11 +115,11 @@ class RoleResource extends Resource
                 Tables\Columns\TextColumn::make('color')
                     ->label('Warna')
                     ->formatStateUsing(fn ($state) => match ($state) {
-                        'blue'   => '🔵 Biru',
-                        'green'  => '🟢 Hijau',
+                        'blue' => '🔵 Biru',
+                        'green' => '🟢 Hijau',
                         'yellow' => '🟡 Kuning',
-                        'red'    => '🔴 Merah',
-                        default  => '⚪ Abu-abu',
+                        'red' => '🔴 Merah',
+                        default => '⚪ Abu-abu',
                     }),
             ])
             ->filters([
@@ -140,9 +146,9 @@ class RoleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListRoles::route('/'),
+            'index' => Pages\ListRoles::route('/'),
             'create' => Pages\CreateRole::route('/create'),
-            'edit'   => Pages\EditRole::route('/{record}/edit'),
+            'edit' => Pages\EditRole::route('/{record}/edit'),
         ];
     }
 }

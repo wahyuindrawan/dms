@@ -16,11 +16,17 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
     protected static ?string $navigationGroup = 'Master Data';
+
     protected static ?string $navigationLabel = 'Pengguna';
+
     protected static ?string $pluralModelLabel = 'Pengguna';
+
     protected static ?string $modelLabel = 'Pengguna';
+
     protected static ?int $navigationSort = 4;
+
     protected static ?string $slug = 'pengguna';
 
     public static function form(Form $form): Form
@@ -109,11 +115,11 @@ class UserResource extends Resource
                     ->label('Role')
                     ->badge()
                     ->color(fn ($record) => match ($record->userRole?->color) {
-                        'blue'   => 'primary',
-                        'green'  => 'success',
+                        'blue' => 'primary',
+                        'green' => 'success',
                         'yellow' => 'warning',
-                        'red'    => 'danger',
-                        default  => 'gray',
+                        'red' => 'danger',
+                        default => 'gray',
                     })
                     ->searchable()
                     ->sortable(),
@@ -162,9 +168,9 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListUsers::route('/'),
+            'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
-            'edit'   => Pages\EditUser::route('/{record}/edit'),
+            'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }

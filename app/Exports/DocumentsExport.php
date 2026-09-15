@@ -4,31 +4,24 @@ namespace App\Exports;
 
 use App\Models\Document;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithTitle;
-use Maatwebsite\Excel\Concerns\Exportable;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class DocumentsExport implements
-    FromQuery,
-    WithHeadings,
-    WithMapping,
-    WithStyles,
-    ShouldAutoSize,
-    WithTitle,
-    ShouldQueue
+class DocumentsExport implements FromQuery, ShouldAutoSize, ShouldQueue, WithHeadings, WithMapping, WithStyles, WithTitle
 {
     use Exportable;
 
     public function __construct(
-        protected ?int    $year            = null,
-        protected ?int    $documentTypeId  = null,
-        protected ?int    $unitId          = null,
-        protected ?int    $categoryId      = null,
+        protected ?int $year = null,
+        protected ?int $documentTypeId = null,
+        protected ?int $unitId = null,
+        protected ?int $categoryId = null,
     ) {}
 
     public function query()
@@ -83,8 +76,8 @@ class DocumentsExport implements
     {
         return [
             1 => [
-                'font'      => ['bold' => true, 'color' => ['argb' => 'FFFFFFFF']],
-                'fill'      => ['fillType' => 'solid', 'startColor' => ['argb' => 'FF3B82F6']],
+                'font' => ['bold' => true, 'color' => ['argb' => 'FFFFFFFF']],
+                'fill' => ['fillType' => 'solid', 'startColor' => ['argb' => 'FF3B82F6']],
                 'alignment' => ['horizontal' => 'center'],
             ],
         ];

@@ -18,11 +18,17 @@ class RukResource extends Resource
     protected static ?string $model = Document::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-line';
+
     protected static ?string $navigationGroup = 'Manajemen Dokumen';
+
     protected static ?string $navigationLabel = 'RUK';
+
     protected static ?string $pluralModelLabel = 'Rencana Usulan Kegiatan (RUK)';
+
     protected static ?string $modelLabel = 'RUK';
+
     protected static ?int $navigationSort = 3;
+
     protected static ?string $slug = 'ruk';
 
     // ─────────────────────────────────────────────────────────
@@ -84,9 +90,9 @@ class RukResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListRuks::route('/'),
+            'index' => Pages\ListRuks::route('/'),
             'create' => Pages\CreateRuk::route('/create'),
-            'edit'   => Pages\EditRuk::route('/{record}/edit'),
+            'edit' => Pages\EditRuk::route('/{record}/edit'),
         ];
     }
 }

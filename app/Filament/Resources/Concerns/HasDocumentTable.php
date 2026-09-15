@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Concerns;
 use Filament\Tables;
 use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * Trait HasDocumentTable
@@ -17,7 +16,8 @@ trait HasDocumentTable
 {
     /**
      * Kolom dasar yang ada di semua tabel dokumen.
-     * @param string $label  Label jenis dokumen, mis: 'SK', 'RUK'
+     *
+     * @param  string  $label  Label jenis dokumen, mis: 'SK', 'RUK'
      */
     protected static function baseDocumentColumns(string $label): array
     {
@@ -30,7 +30,7 @@ trait HasDocumentTable
                 ->weight('bold'),
 
             Tables\Columns\TextColumn::make('title')
-                ->label("Nama / Judul")
+                ->label('Nama / Judul')
                 ->searchable()
                 ->sortable()
                 ->wrap(),
@@ -70,11 +70,11 @@ trait HasDocumentTable
             ->label('Status')
             ->badge()
             ->color(fn (string $state): string => match ($state) {
-                'draft'    => 'warning',
-                'active'   => 'success',
+                'draft' => 'warning',
+                'active' => 'success',
                 'archived' => 'gray',
-                'void'     => 'danger',
-                default    => 'gray',
+                'void' => 'danger',
+                default => 'gray',
             })
             ->sortable();
     }
@@ -94,7 +94,8 @@ trait HasDocumentTable
 
     /**
      * Filter dasar: Status, Tahun, dan Klaster (opsional).
-     * @param bool $withCluster  Tambahkan filter klaster
+     *
+     * @param  bool  $withCluster  Tambahkan filter klaster
      */
     protected static function baseDocumentFilters(bool $withCluster = false): array
     {
@@ -127,10 +128,10 @@ trait HasDocumentTable
         $filters[] = Tables\Filters\SelectFilter::make('status')
             ->label('Status')
             ->options([
-                'draft'    => 'Draft',
-                'active'   => 'Aktif',
+                'draft' => 'Draft',
+                'active' => 'Aktif',
                 'archived' => 'Diarsipkan',
-                'void'     => 'Dibatalkan',
+                'void' => 'Dibatalkan',
             ])
             ->multiple();
 
@@ -149,7 +150,8 @@ trait HasDocumentTable
 
     /**
      * Actions standar tabel dokumen: Edit, View File, Delete.
-     * @param string $typeCode  Untuk link download file
+     *
+     * @param  string  $typeCode  Untuk link download file
      */
     protected static function baseDocumentActions(): array
     {
@@ -167,7 +169,7 @@ trait HasDocumentTable
                             ?? $record->files()->first();
 
                         if ($file) {
-                            return redirect()->route('document-file.preview', ['file' => $file->id]); //inline route preview
+                            return redirect()->route('document-file.preview', ['file' => $file->id]); // inline route preview
                         }
                     })
                     ->openUrlInNewTab(), // perintah untuk membuka di tab baru

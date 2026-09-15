@@ -3,15 +3,15 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Document;
-use Filament\Widgets\TableWidget as BaseWidget;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Widgets\TableWidget as BaseWidget;
 
 class RecentDocumentsWidget extends BaseWidget
 {
     protected static ?int $sort = 2;
-    protected int | string | array $columnSpan = 'full';
+
+    protected int|string|array $columnSpan = 'full';
 
     public function table(Table $table): Table
     {
@@ -37,7 +37,7 @@ class RecentDocumentsWidget extends BaseWidget
                     ->label('Jenis')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'SK'  => 'primary',
+                        'SK' => 'primary',
                         'SOP' => 'success',
                         'RUK' => 'warning',
                         'RPK' => 'info',
@@ -51,11 +51,11 @@ class RecentDocumentsWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'draft'    => 'warning',
-                        'active'   => 'success',
+                        'draft' => 'warning',
+                        'active' => 'success',
                         'archived' => 'gray',
-                        'void'     => 'danger',
-                        default    => 'gray',
+                        'void' => 'danger',
+                        default => 'gray',
                     }),
 
                 Tables\Columns\TextColumn::make('document_date')

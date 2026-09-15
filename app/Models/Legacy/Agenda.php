@@ -2,9 +2,9 @@
 
 namespace App\Models\Legacy;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Traits\ManageDocumentFileName;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 /**
  * @deprecated Use App\Models\Document instead.
@@ -12,7 +12,9 @@ use App\Traits\ManageDocumentFileName;
 class Agenda extends Model
 {
     use ManageDocumentFileName;
+
     protected $table = 'agenda';
+
     protected $fillable = [
         'judul',
         'deskripsi',
@@ -41,12 +43,12 @@ class Agenda extends Model
                             $model->updateQuietly(['dokumen_path' => $newPath]);
                         }
                     } catch (\Exception $e) {
-                        \Log::warning("Failed to rename file from {$oldPath} to {$newPath}: " . $e->getMessage());
+                        Log::warning("Failed to rename file from {$oldPath} to {$newPath}: ".$e->getMessage());
                     }
                 }
             }
         });
-        
+
         static::updated(function ($model) {
             if (($model->isDirty('judul') || $model->isDirty('dokumen_path')) && $model->dokumen_path && $model->judul) {
                 $oldPath = $model->dokumen_path;
@@ -60,7 +62,7 @@ class Agenda extends Model
                             $model->updateQuietly(['dokumen_path' => $newPath]);
                         }
                     } catch (\Exception $e) {
-                        \Log::warning("Failed to rename file from {$oldPath} to {$newPath}: " . $e->getMessage());
+                        Log::warning("Failed to rename file from {$oldPath} to {$newPath}: ".$e->getMessage());
                     }
                 }
             }

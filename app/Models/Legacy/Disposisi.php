@@ -11,12 +11,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Disposisi extends Model
 {
     protected $table = 'disposisi';
+
     protected $fillable = [
-        'surat_masuk_id', 
-        'dari_worker_id', 
+        'surat_masuk_id',
+        'dari_worker_id',
         'ke_worker_id',
-        'catatan', 
-        'status', 
+        'catatan',
+        'status',
         'dibaca_pada',
     ];
 

@@ -9,7 +9,6 @@ use App\Models\DocumentType;
 use App\Models\Unit;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
-use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -22,13 +21,19 @@ class LaporanPage extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static ?string $navigationIcon  = 'heroicon-o-chart-bar';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+
     protected static ?string $navigationGroup = 'Laporan';
+
     protected static ?string $navigationLabel = 'Laporan Dokumen';
-    protected static ?string $title           = 'Laporan Dokumen';
-    protected static ?string $slug            = 'laporan-dokumen';
-    protected static ?int    $navigationSort  = 10;
-    protected static string  $view            = 'filament.pages.laporan';
+
+    protected static ?string $title = 'Laporan Dokumen';
+
+    protected static ?string $slug = 'laporan-dokumen';
+
+    protected static ?int $navigationSort = 10;
+
+    protected static string $view = 'filament.pages.laporan';
 
     // Form state
     public array $data = [];
@@ -36,10 +41,10 @@ class LaporanPage extends Page implements HasForms
     public function mount(): void
     {
         $this->form->fill([
-            'year'           => (int) date('Y'),
+            'year' => (int) date('Y'),
             'documentTypeId' => null,
-            'unitId'         => null,
-            'categoryId'     => null,
+            'unitId' => null,
+            'categoryId' => null,
         ]);
     }
 
@@ -116,7 +121,7 @@ class LaporanPage extends Page implements HasForms
                         ->count();
 
                     // Gunakan Queue jika data > 500 rows
-                    $filename = 'laporan-dokumen-' . now()->format('Ymd-His') . '.xlsx';
+                    $filename = 'laporan-dokumen-'.now()->format('Ymd-His').'.xlsx';
 
                     if ($count > 500) {
                         (new DocumentsExport(
@@ -151,16 +156,16 @@ class LaporanPage extends Page implements HasForms
                 ->icon('heroicon-o-document-arrow-down')
                 ->color('danger')
                 ->action(function () {
-                    $data      = $this->form->getState();
+                    $data = $this->form->getState();
                     $documents = $this->getDocuments();
 
                     $pdf = Pdf::loadView('exports.documents-pdf', [
-                        'documents'   => $documents,
-                        'year'        => $data['year'],
-                        'typeName'    => $data['documentTypeId']
+                        'documents' => $documents,
+                        'year' => $data['year'],
+                        'typeName' => $data['documentTypeId']
                             ? DocumentType::find($data['documentTypeId'])?->name
                             : null,
-                        'unitName'    => $data['unitId']
+                        'unitName' => $data['unitId']
                             ? Unit::find($data['unitId'])?->name
                             : null,
                         'clusterName' => $data['categoryId']
@@ -168,13 +173,13 @@ class LaporanPage extends Page implements HasForms
                             : null,
                     ])->setPaper('a4', 'landscape');
 
-                    $filename = 'laporan-dokumen-' . now()->format('Ymd-His') . '.pdf';
+                    $filename = 'laporan-dokumen-'.now()->format('Ymd-His').'.pdf';
 
                     // Log aktivitas download
                     activity()->log("Export PDF laporan dokumen ({$documents->count()} data)");
 
                     return response()->streamDownload(
-                        fn () => print($pdf->output()),
+                        fn () => print ($pdf->output()),
                         $filename
                     );
                 }),

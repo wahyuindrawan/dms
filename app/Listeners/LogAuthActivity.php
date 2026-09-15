@@ -2,9 +2,9 @@
 
 namespace App\Listeners;
 
+use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
-use Illuminate\Auth\Events\Failed;
 
 class LogAuthActivity
 {
@@ -30,8 +30,8 @@ class LogAuthActivity
     {
         activity()
             ->withProperties([
-                'ip'         => request()->ip(),
-                'email'      => $event->credentials['email'] ?? null,
+                'ip' => request()->ip(),
+                'email' => $event->credentials['email'] ?? null,
                 'user_agent' => request()->userAgent(),
             ])
             ->log('Percobaan login gagal');

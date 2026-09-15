@@ -5,7 +5,6 @@ namespace App\Filament\Pages\Auth;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Auth\Login as BaseLogin;
-use Illuminate\Contracts\Support\Htmlable;
 
 class Login extends BaseLogin
 {

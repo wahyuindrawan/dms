@@ -2,11 +2,11 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Document;
+use App\Filament\Resources\RpkResource;
+use App\Filament\Resources\RukResource;
 use App\Filament\Resources\SkResource;
 use App\Filament\Resources\SopResource;
-use App\Filament\Resources\RukResource;
-use App\Filament\Resources\RpkResource;
+use App\Models\Document;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -16,8 +16,8 @@ class StatsOverview extends BaseWidget
 
     protected function getStats(): array
     {
-        $total  = Document::count();
-        $skCount  = Document::whereHas('documentType', fn ($q) => $q->where('code', 'SK'))->count();
+        $total = Document::count();
+        $skCount = Document::whereHas('documentType', fn ($q) => $q->where('code', 'SK'))->count();
         $sopCount = Document::whereHas('documentType', fn ($q) => $q->where('code', 'SOP'))->count();
         $rukCount = Document::whereHas('documentType', fn ($q) => $q->where('code', 'RUK'))->count();
         $rpkCount = Document::whereHas('documentType', fn ($q) => $q->where('code', 'RPK'))->count();
@@ -25,7 +25,7 @@ class StatsOverview extends BaseWidget
         // Trend bulan ini vs bulan lalu
         $thisMonth = Document::whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->count();
         $lastMonth = Document::whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->count();
-        $trend     = $thisMonth >= $lastMonth ? 'up' : 'down';
+        $trend = $thisMonth >= $lastMonth ? 'up' : 'down';
 
         return [
             Stat::make('Total Dokumen', $total)

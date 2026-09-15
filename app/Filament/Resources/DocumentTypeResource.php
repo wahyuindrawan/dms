@@ -17,11 +17,17 @@ class DocumentTypeResource extends Resource
     protected static ?string $model = DocumentType::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-folder-open';
+
     protected static ?string $navigationGroup = 'Master Data';
+
     protected static ?string $navigationLabel = 'Jenis Dokumen';
+
     protected static ?string $pluralModelLabel = 'Jenis Dokumen';
+
     protected static ?string $modelLabel = 'Jenis Dokumen';
+
     protected static ?int $navigationSort = 2;
+
     protected static ?string $slug = 'jenis-dokumen';
 
     public static function form(Form $form): Form
@@ -193,9 +199,9 @@ class DocumentTypeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListDocumentTypes::route('/'),
+            'index' => Pages\ListDocumentTypes::route('/'),
             'create' => Pages\CreateDocumentType::route('/create'),
-            'edit'   => Pages\EditDocumentType::route('/{record}/edit'),
+            'edit' => Pages\EditDocumentType::route('/{record}/edit'),
         ];
     }
 }

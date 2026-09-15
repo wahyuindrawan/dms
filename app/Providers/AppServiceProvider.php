@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,8 +13,6 @@ class AppServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        \App\Models\Legacy\Agenda::class => \App\Policies\AgendaPolicy::class,
-        \App\Models\Legacy\Disposisi::class => \App\Policies\DisposisiPolicy::class,
         \App\Models\Role::class => \App\Policies\RolePolicy::class,
         \App\Models\User::class => \App\Policies\UserPolicy::class,
         \App\Models\Unit::class => \App\Policies\UnitPolicy::class,

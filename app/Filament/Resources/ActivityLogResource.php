@@ -14,35 +14,44 @@ class ActivityLogResource extends Resource
 {
     protected static ?string $model = Activity::class;
 
-    protected static ?string $navigationIcon     = 'heroicon-o-clipboard-document-list';
-    protected static ?string $navigationGroup    = 'Pengaturan';
-    protected static ?string $navigationLabel    = 'Log Aktivitas';
-    protected static ?string $pluralModelLabel   = 'Log Aktivitas';
-    protected static ?string $modelLabel         = 'Log Aktivitas';
-    protected static ?int    $navigationSort     = 99;
-    protected static ?string $slug              = 'activity-log';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
+
+    protected static ?string $navigationGroup = 'Pengaturan';
+
+    protected static ?string $navigationLabel = 'Log Aktivitas';
+
+    protected static ?string $pluralModelLabel = 'Log Aktivitas';
+
+    protected static ?string $modelLabel = 'Log Aktivitas';
+
+    protected static ?int $navigationSort = 99;
+
+    protected static ?string $slug = 'activity-log';
 
     // Hanya dapat dilihat, tidak bisa dibuat/diubah dari UI
-    public static function canCreate(): bool { return false; }
-
-    public static function canViewAny(): bool 
-    { 
-        return auth()->user()?->userRole?->nama === 'admin';   
+    public static function canCreate(): bool
+    {
+        return false;
     }
 
-    public static function canView($record): bool 
-    { 
-        return auth()->user()?->userRole?->nama === 'admin'; 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->userRole?->nama === 'admin';
     }
 
-    public static function canUpdate($record): bool 
-    { 
-        return false; 
+    public static function canView($record): bool
+    {
+        return auth()->user()?->userRole?->nama === 'admin';
     }
 
-    public static function canDelete($record): bool 
-    { 
-        return false; 
+    public static function canUpdate($record): bool
+    {
+        return false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        return false;
     }
 
     public static function shouldRegisterNavigation(): bool
@@ -80,8 +89,8 @@ class ActivityLogResource extends Resource
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'document' => 'primary',
-                        'default'  => 'gray',
-                        default    => 'gray',
+                        'default' => 'gray',
+                        default => 'gray',
                     })
                     ->sortable(),
 
@@ -92,7 +101,7 @@ class ActivityLogResource extends Resource
                         'created' => 'success',
                         'updated' => 'warning',
                         'deleted' => 'danger',
-                        default   => 'gray',
+                        default => 'gray',
                     })
                     ->sortable(),
 
@@ -118,7 +127,7 @@ class ActivityLogResource extends Resource
                     ->label('Log')
                     ->options([
                         'document' => 'Dokumen',
-                        'default'  => 'Autentikasi',
+                        'default' => 'Autentikasi',
                     ]),
 
                 Tables\Filters\SelectFilter::make('event')
@@ -172,7 +181,7 @@ class ActivityLogResource extends Resource
     {
         return [
             'index' => Pages\ListActivityLogs::route('/'),
-            'view'  => Pages\ViewActivityLog::route('/{record}'),
+            'view' => Pages\ViewActivityLog::route('/{record}'),
         ];
     }
 }

@@ -19,11 +19,17 @@ class SkResource extends Resource
     protected static ?string $model = Document::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
     protected static ?string $navigationGroup = 'Manajemen Dokumen';
+
     protected static ?string $navigationLabel = 'Surat Keputusan (SK)';
+
     protected static ?string $pluralModelLabel = 'Surat Keputusan (SK)';
+
     protected static ?string $modelLabel = 'SK';
+
     protected static ?int $navigationSort = 1;
+
     protected static ?string $slug = 'surat-keputusan';
 
     // ─────────────────────────────────────────────────────────
@@ -61,13 +67,13 @@ class SkResource extends Resource
                     Forms\Components\Select::make('decree_type')
                         ->label('Jenis Keputusan')
                         ->options([
-                            'pengangkatan'   => 'Pengangkatan',
-                            'pemberhentian'  => 'Pemberhentian',
-                            'penugasan'      => 'Penugasan',
-                            'penetapan'      => 'Penetapan',
-                            'kebijakan'      => 'Kebijakan',
-                            'peraturan'      => 'Peraturan',
-                            'lainnya'        => 'Lainnya',
+                            'pengangkatan' => 'Pengangkatan',
+                            'pemberhentian' => 'Pemberhentian',
+                            'penugasan' => 'Penugasan',
+                            'penetapan' => 'Penetapan',
+                            'kebijakan' => 'Kebijakan',
+                            'peraturan' => 'Peraturan',
+                            'lainnya' => 'Lainnya',
                         ])
                         ->default('penetapan')
                         ->required(),
@@ -156,9 +162,9 @@ class SkResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListSks::route('/'),
+            'index' => Pages\ListSks::route('/'),
             'create' => Pages\CreateSk::route('/create'),
-            'edit'   => Pages\EditSk::route('/{record}/edit'),
+            'edit' => Pages\EditSk::route('/{record}/edit'),
         ];
     }
 }

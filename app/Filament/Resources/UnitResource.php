@@ -17,11 +17,17 @@ class UnitResource extends Resource
     protected static ?string $model = Unit::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+
     protected static ?string $navigationGroup = 'Master Data';
+
     protected static ?string $navigationLabel = 'Unit Organisasi';
+
     protected static ?string $pluralModelLabel = 'Unit Organisasi';
+
     protected static ?string $modelLabel = 'Unit Organisasi';
+
     protected static ?int $navigationSort = 1;
+
     protected static ?string $slug = 'unit';
 
     public static function form(Form $form): Form
@@ -56,12 +62,12 @@ class UnitResource extends Resource
                     Forms\Components\Select::make('type')
                         ->label('Tipe Unit')
                         ->options([
-                            'lembaga'   => 'Lembaga',
-                            'direktorat'=> 'Direktorat',
-                            'divisi'    => 'Divisi',
-                            'bagian'    => 'Bagian',
-                            'seksi'     => 'Seksi',
-                            'unit'      => 'Unit',
+                            'lembaga' => 'Lembaga',
+                            'direktorat' => 'Direktorat',
+                            'divisi' => 'Divisi',
+                            'bagian' => 'Bagian',
+                            'seksi' => 'Seksi',
+                            'unit' => 'Unit',
                         ])
                         ->default('unit')
                         ->required(),
@@ -135,12 +141,12 @@ class UnitResource extends Resource
                     ->label('Tipe')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'lembaga'    => 'danger',
+                        'lembaga' => 'danger',
                         'direktorat' => 'warning',
-                        'divisi'     => 'info',
-                        'bagian'     => 'success',
-                        'seksi'      => 'gray',
-                        default      => 'primary',
+                        'divisi' => 'info',
+                        'bagian' => 'success',
+                        'seksi' => 'gray',
+                        default => 'primary',
                     })
                     ->sortable(),
 
@@ -164,12 +170,12 @@ class UnitResource extends Resource
                 Tables\Filters\SelectFilter::make('type')
                     ->label('Tipe Unit')
                     ->options([
-                        'lembaga'    => 'Lembaga',
+                        'lembaga' => 'Lembaga',
                         'direktorat' => 'Direktorat',
-                        'divisi'     => 'Divisi',
-                        'bagian'     => 'Bagian',
-                        'seksi'      => 'Seksi',
-                        'unit'       => 'Unit',
+                        'divisi' => 'Divisi',
+                        'bagian' => 'Bagian',
+                        'seksi' => 'Seksi',
+                        'unit' => 'Unit',
                     ]),
 
                 Tables\Filters\TernaryFilter::make('is_active')
@@ -208,9 +214,9 @@ class UnitResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListUnits::route('/'),
+            'index' => Pages\ListUnits::route('/'),
             'create' => Pages\CreateUnit::route('/create'),
-            'edit'   => Pages\EditUnit::route('/{record}/edit'),
+            'edit' => Pages\EditUnit::route('/{record}/edit'),
         ];
     }
 }

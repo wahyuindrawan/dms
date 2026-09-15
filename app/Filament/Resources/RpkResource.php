@@ -18,11 +18,17 @@ class RpkResource extends Resource
     protected static ?string $model = Document::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-bar';
+
     protected static ?string $navigationGroup = 'Manajemen Dokumen';
+
     protected static ?string $navigationLabel = 'RPK';
+
     protected static ?string $pluralModelLabel = 'Rencana Pelaksanaan Kegiatan (RPK)';
+
     protected static ?string $modelLabel = 'RPK';
+
     protected static ?int $navigationSort = 4;
+
     protected static ?string $slug = 'rpk';
 
     // ─────────────────────────────────────────────────────────
@@ -84,9 +90,9 @@ class RpkResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListRpks::route('/'),
+            'index' => Pages\ListRpks::route('/'),
             'create' => Pages\CreateRpk::route('/create'),
-            'edit'   => Pages\EditRpk::route('/{record}/edit'),
+            'edit' => Pages\EditRpk::route('/{record}/edit'),
         ];
     }
 }

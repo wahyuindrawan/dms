@@ -19,11 +19,17 @@ class SopResource extends Resource
     protected static ?string $model = Document::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
+
     protected static ?string $navigationGroup = 'Manajemen Dokumen';
+
     protected static ?string $navigationLabel = 'SOP';
+
     protected static ?string $pluralModelLabel = 'SOP';
+
     protected static ?string $modelLabel = 'SOP';
+
     protected static ?int $navigationSort = 2;
+
     protected static ?string $slug = 'sop';
 
     // ─────────────────────────────────────────────────────────
@@ -161,9 +167,9 @@ class SopResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListSops::route('/'),
+            'index' => Pages\ListSops::route('/'),
             'create' => Pages\CreateSop::route('/create'),
-            'edit'   => Pages\EditSop::route('/{record}/edit'),
+            'edit' => Pages\EditSop::route('/{record}/edit'),
         ];
     }
 }

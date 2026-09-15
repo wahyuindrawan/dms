@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -16,7 +17,7 @@ trait ManageDocumentFileName
         $extension = pathinfo($originalFileName, PATHINFO_EXTENSION);
         $slug = Str::slug($judul, '-');
         $timestamp = now()->format('YmdHis');
-        
+
         return "{$slug}-{$timestamp}.{$extension}";
     }
 
@@ -26,7 +27,7 @@ trait ManageDocumentFileName
      */
     public function renameUploadedFile(string $disk = 'public'): void
     {
-        if (!$this->file_path || !$this->judul) {
+        if (! $this->file_path || ! $this->judul) {
             return;
         }
 
@@ -48,7 +49,7 @@ trait ManageDocumentFileName
                 $this->updateQuietly(['file_path' => $newPath]);
             }
         } catch (\Exception $e) {
-            \Log::warning("Failed to rename file from {$oldPath} to {$newPath}: " . $e->getMessage());
+            Log::warning("Failed to rename file from {$oldPath} to {$newPath}: ".$e->getMessage());
         }
     }
 }

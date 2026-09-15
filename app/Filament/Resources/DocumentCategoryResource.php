@@ -17,11 +17,17 @@ class DocumentCategoryResource extends Resource
     protected static ?string $model = DocumentCategory::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
+
     protected static ?string $navigationGroup = 'Master Data';
+
     protected static ?string $navigationLabel = 'Klaster Dokumen';
+
     protected static ?string $pluralModelLabel = 'Klaster Dokumen';
+
     protected static ?string $modelLabel = 'Klaster Dokumen';
+
     protected static ?int $navigationSort = 3;
+
     protected static ?string $slug = 'klaster-dokumen';
 
     public static function form(Form $form): Form
@@ -161,9 +167,9 @@ class DocumentCategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListDocumentCategories::route('/'),
+            'index' => Pages\ListDocumentCategories::route('/'),
             'create' => Pages\CreateDocumentCategory::route('/create'),
-            'edit'   => Pages\EditDocumentCategory::route('/{record}/edit'),
+            'edit' => Pages\EditDocumentCategory::route('/{record}/edit'),
         ];
     }
 }
