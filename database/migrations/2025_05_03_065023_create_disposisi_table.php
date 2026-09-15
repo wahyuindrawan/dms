@@ -16,12 +16,14 @@ return new class extends Migration
     {
         Schema::create('disposisi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('surat_masuk_id')->constrained('surat_masuk')->onDelete('cascade');
+            // Note: surat_masuk_id foreign key removed - table surat_masuk no longer exists
+            // This will be handled by migration 2026_07_15_000002_update_disposisi_table_for_independence.php
+            $table->unsignedBigInteger('surat_masuk_id')->nullable();
             $table->foreignId('dari_worker_id')->nullable()->constrained('workers')->nullOnDelete();
-            $table->foreignId('ke_worker_id')->constrained('workers')->onDelete('cascade');
+            $table->foreignId('ke_worker_id')->nullable()->constrained('workers')->nullOnDelete();
             $table->text('catatan')->nullable();
             $table->enum('status', ['pending', 'selesai'])->default('pending');
-            $table->boolean('dibaca')->default(false);;
+            $table->boolean('dibaca')->default(false);
             $table->timestamps();
         });
     }
