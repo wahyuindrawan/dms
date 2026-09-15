@@ -9,8 +9,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('disposisi', function (Blueprint $table) {
+            // Check if foreign key exists before dropping
+            // (it may not exist if create_disposisi_table was modified)
             if (Schema::hasColumn('disposisi', 'surat_masuk_id')) {
-                $table->dropForeign(['surat_masuk_id']);
+                // Only drop foreign key if it exists
+                try {
+                    $table->dropForeign(['surat_masuk_id']);
+                } catch (\Exception $e) {
+                    // Foreign key doesn't exist, continue
+                }
                 $table->dropColumn('surat_masuk_id');
             }
             
