@@ -138,6 +138,9 @@ trait HasDocumentForm
                             ->directory($dir)
                             ->acceptedFileTypes(['application/pdf', 'application/msword',
                                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'])
+                            ->validationMessages([
+                                'accepted_file_types' => 'Hanya file PDF dan Word yang diperbolehkan.',
+                            ])
                             ->maxSize(10240) // 10 MB
                             ->required()
                             ->storeFileNamesIn('file_name')
